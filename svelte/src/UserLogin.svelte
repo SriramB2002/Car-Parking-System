@@ -1,3 +1,7 @@
+<svelte:head>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</svelte:head>
+
 <script>
     import { Router, navigate } from "svelte-navigator";
     let username = 'user', password = 'pwd';
@@ -37,8 +41,7 @@
             </form>
             <button on:click={post}>Login</button>
             <p>(or)</p>
-            <button on:click={nav2}>Google Login</button>
-            <button on:click={nav3}>Facebook Login</button>
+            <div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
             <h3>Here for the first time?</h3> <button on:click={nav1}>Register</button>
         </div>
     </main>
@@ -61,5 +64,9 @@
         margin: 10px;
         border-radius: 5px;
         border: 2px solid black;
+    }
+
+    .g-signin2 {
+        margin-left: 144px;
     }
 </style>
