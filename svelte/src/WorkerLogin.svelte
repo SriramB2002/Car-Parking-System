@@ -1,6 +1,22 @@
 <script>
     import { Router, navigate } from "svelte-navigator";
-    const navy = () => {
+import { worker } from "./stores";
+
+    let name = '', pass = '';
+
+    async function post() {
+        const res = await fetch("http://localhost:8080/checkin", {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({
+                "name": name,
+                "pass": pass
+            })
+        })
+        const resp = await res.text();
+        worker.set(resp);
+        console.log(resp);
+
         navigate("WorkerDashboard");
     }
 </script>
@@ -10,11 +26,11 @@
         <h2>Worker Login</h2>
         <div class="enter">
             <h3>Enter login credentials here:</h3>
-            <form>
-                <input type="text" placeholder="Username" required><br>
-                <input type="password" placeholder="Password" required><br>
+            <form on:submit|preventDefault={post}>
+                <input type="text" placeholder="Username" required bind:value={name}><br>
+                <input type="password" placeholder="Password" required bind:value={pass}><br>
+                <button type="submit">Login</button>
             </form>
-            <button on:click={navy}>Login</button>
         </div>
     </main>
 </Router>

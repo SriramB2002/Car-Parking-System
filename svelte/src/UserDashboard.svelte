@@ -1,9 +1,13 @@
 <script>
+
+    import { login } from "./stores";
+
+    $: console.log("i woz here")
     
 </script>
 
 <main>
-    <p>Hello</p>
+    <p>{$login}</p>
 </main>
 
 <style>

@@ -1,28 +1,61 @@
 <script>
 
+    let f = "";
+    let l = "";
+    let u = "";
+    let p = "";
+    let c_p = "";
+    let a = "";
+    let e = "";
+    let m = "";
+    let c = "";
+
+    async function register() {
+
+        const res = await fetch("http://localhost:8080/register", {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({
+                "first_name": f,
+                "last_name": l,
+                "username": u,
+                "password": p,
+                "address": a,
+                "email": e,
+                "mobile": m,
+                "car_reg": c,
+                    
+            })
+        })
+        const resp = await res.text();
+        console.log(resp);
+
+    }   
+
 </script>
 
 <main>
     <h2>User Registration Details</h2>
-    <form class="enter">
+    <form class="enter" on:submit={register}>
         <label for="firstname">First Name:</label>
-        <input type="text" placeholder="First Name" required>
+        <input type="text" placeholder="First Name" required bind:value={f}>
         <label for="lastname">Last Name:</label>
-        <input type="text" placeholder="Last Name" required>
+        <input type="text" placeholder="Last Name" required bind:value={l}>
         <label for="Username">Username:</label>
-        <input type="text" placeholder="Username" required>
+        <input type="text" placeholder="Username" required bind:value={u}>
         <label for="password">Password:</label>
-        <input type="password" placeholder="Password" required>
+        <input type="password" placeholder="Password" required bind:value={p}>
         <label for="password-confirm">Confirm Password:</label>
-        <input type="password" placeholder="Confirm Password" required>
+        <input type="password" placeholder="Confirm Password" required bind:value={c_p}>
         <label for="residential-address">Residential Address:</label>
-        <input type="text" placeholder="Residential Address" required>
+        <input type="text" placeholder="Residential Address" required bind:value={a}>
         <label for="email">Email ID:</label>
-        <input type="email" placeholder="Email ID" required>
+        <input type="email" placeholder="Email ID" required bind:value={e}>
         <label for="mobile">Mobile Number:</label>
-        <input type="tel" placeholder="Mobile Number" required>
+        <input type="tel" placeholder="Mobile Number" required bind:value={m}>
         <label for="car-reg-no">Car Registration Number:</label>
-        <input type="text" placeholder="Car Registration Number" required><br>
+        <input type="text" placeholder="Car Registration Number" required bind:value={c}><br>
+        <button type="submit">Register</button>
         <button>Verify Email ID</button>
         <button>Verify Mobile Number</button>
     </form>

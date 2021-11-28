@@ -1,10 +1,7 @@
 <script>
     import { Router, navigate } from "svelte-navigator";
-    let username, password;
-    let val = 0;
     const nav = () => {
-        if (username == "admin" && password == "adminpwd") navigate("AdminDashboard");
-        else val = 1;
+        navigate("AdminDashboard");
     }
 </script>
 
@@ -14,13 +11,10 @@
         <div class="enter">
             <h3>Enter login credentials here:</h3>
             <form>
-                <input type="text" placeholder="Username" required bind:value={username}><br>
-                <input type="password" placeholder="Password" required bind:value={password}><br>
+                <input type="text" placeholder="Username" required><br>
+                <input type="password" placeholder="Password" required><br>
             </form>
             <button on:click={nav}>Login</button>
-            {#if val == 1}
-                <p class="red">Invalid Credentials!</p>
-            {/if}
         </div>
     </main>
 </Router>
@@ -42,9 +36,5 @@
         margin: 10px;
         border-radius: 5px;
         border: 2px solid black;
-    }
-
-    .red {
-        color: red;
     }
 </style>

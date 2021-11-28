@@ -1,33 +1,36 @@
-<svelte:head>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-</svelte:head>
-
 <script>
     import { Router, navigate } from "svelte-navigator";
-    let username = 'user', password = 'pwd';
-    let ans = null;
+    import { login } from "./stores.js";
+
+    let username = "", password = "";
+    
     const nav1 = () => {
         navigate("UserRegister");
     }
     const nav2 = () => {
-        navigate("http://localhost:8080/oauth2/authorization/google")
+        //navigate("http://localhost:8080/oauth2/authorization/google")
     }
     const nav3 = () => {
-        navigate("http://localhost:8080/oauth2/authorization/facebook")
+        //navigate("http://localhost:8080/oauth2/authorization/facebook")
     }
 
     async function post() {
-        const res = await fetch("http://localhost:8080/data", {
+        const res = await fetch("http://localhost:8080/login", {
             method: 'POST',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({
-                "user": username,
-                "pass": password
+                "username": username,
+                "password": password
             })
         })
         const resp = await res.text();
+        login.set(resp);
         console.log(resp);
+
+        navigate("UserDashboard");
     }
+
+    
 </script>
 
 <Router>
@@ -35,13 +38,15 @@
         <h2>User Login</h2>
         <div class="enter">
             <h3>Enter login credentials here:</h3>
-            <form>
-                <input type="text" placeholder="Username" bind:value={username} required><br>
-                <input type="password" placeholder="Password" bind:value={password} required><br>
+            <form on:submit|preventDefault={post}>
+                <input type="text" placeholder="Username" required bind:value={username}><br>
+                <input type="password" placeholder="Password" required bind:value={password}><br>
+                <button type="submit">Login</button>
             </form>
-            <button on:click={post}>Login</button>
+            
             <p>(or)</p>
-            <div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
+            <button on:click={nav2}>Google Login</button>
+            <button on:click={nav3}>Facebook Login</button>
             <h3>Here for the first time?</h3> <button on:click={nav1}>Register</button>
         </div>
     </main>
@@ -64,9 +69,5 @@
         margin: 10px;
         border-radius: 5px;
         border: 2px solid black;
-    }
-
-    .g-signin2 {
-        margin-left: 144px;
     }
 </style>
