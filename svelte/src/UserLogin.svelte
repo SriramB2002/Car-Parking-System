@@ -1,3 +1,7 @@
+<svelte:head>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+</svelte:head>
+
 <script>
     import { Router, navigate } from "svelte-navigator";
     import { login } from "./stores.js";
@@ -6,12 +10,6 @@
     
     const nav1 = () => {
         navigate("UserRegister");
-    }
-    const nav2 = () => {
-        //navigate("http://localhost:8080/oauth2/authorization/google")
-    }
-    const nav3 = () => {
-        //navigate("http://localhost:8080/oauth2/authorization/facebook")
     }
 
     async function post() {
@@ -45,8 +43,7 @@
             </form>
             
             <p>(or)</p>
-            <button on:click={nav2}>Google Login</button>
-            <button on:click={nav3}>Facebook Login</button>
+            <div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
             <h3>Here for the first time?</h3> <button on:click={nav1}>Register</button>
         </div>
     </main>
@@ -69,5 +66,9 @@
         margin: 10px;
         border-radius: 5px;
         border: 2px solid black;
+    }
+
+    .g-signin2 {
+        margin-left: 144px;
     }
 </style>
