@@ -21,6 +21,7 @@
   "dependencies": {
     "rollup-plugin-dev": "^2.0.1",
     "sirv-cli": "^1.0.0",
-    "svelte-navigator": "^3.1.5"
+    "svelte-navigator": "^3.1.5",
+    "sveltestrap": "^5.6.3"
   }
 }

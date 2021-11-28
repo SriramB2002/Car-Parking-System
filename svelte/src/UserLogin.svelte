@@ -28,6 +28,10 @@
         navigate("UserDashboard");
     }
 
+    window.onSignIn = (googleUser) => {
+        login.set(googleUser.getBasicProfile().getName())
+        navigate("UserDashboard");
+  };
     
 </script>
 
