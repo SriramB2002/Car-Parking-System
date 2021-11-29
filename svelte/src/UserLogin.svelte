@@ -7,6 +7,11 @@
     import { login } from "./stores.js";
 
     let username = "", password = "";
+    let r;
+
+    login.subscribe(x => {
+        r = x;
+    })
     
     const nav1 = () => {
         navigate("UserRegister");
@@ -22,10 +27,16 @@
             })
         })
         const resp = await res.text();
-        login.set(resp);
+
+        if(resp != ""){ 
+            login.set(resp); 
+            navigate("UserDashboard");
+        }
+
+        else login.set("wrong");
+
         console.log(resp);
 
-        navigate("UserDashboard");
     }
 
     window.onSignIn = (googleUser) => {
@@ -45,6 +56,10 @@
                 <input type="password" placeholder="Password" required bind:value={password}><br>
                 <button type="submit">Login</button>
             </form>
+
+            {#if r == "wrong"}
+                <p class="red">Wrong username/password</p>
+            {/if}
             
             <p>(or)</p>
             <div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
@@ -74,5 +89,9 @@
 
     .g-signin2 {
         margin-left: 144px;
+    }
+
+    .red {
+        color: red;
     }
 </style>

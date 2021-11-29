@@ -1,10 +1,23 @@
 <script>
     import { Router, navigate } from "svelte-navigator";
+    import { admin } from "./stores";
     let username, password;
-    let val = 0;
+
+    let a;
+
+    admin.subscribe(x => {
+        a = x;
+    });
+
     const nav = () => {
-        if (username == "admin" && password == "adminpwd") navigate("AdminDashboard");
-        else val = 1;
+        if (username == "admin" && password == "adminpwd"){
+             navigate("AdminDashboard");
+             admin.set(1);
+        }
+
+        else {
+            admin.set(2);
+        }
     }
 </script>
 
@@ -18,7 +31,7 @@
                 <input type="password" placeholder="Password" required bind:value={password}><br>
             </form>
             <button on:click={nav}>Login</button>
-            {#if val == 1}
+            {#if a == 2}
                 <p class="red">Invalid Credentials!</p>
             {/if}
         </div>

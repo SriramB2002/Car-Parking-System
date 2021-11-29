@@ -44,17 +44,9 @@ public class UserLogin {
 
         if(document.exists()) {
             if(document.toObject(User.class).getPassword().equals(user.getPassword())) return document.toObject(User.class);
-            else {
-                User u = new User();
-                u.setUsername("password incorrect");
-                return u;
-            }
+            else return null;
         }
 
-        else {
-            User u = new User();
-            u.setUsername("file not found");
-            return u;
-        }
+        else return null;
     }
 }
