@@ -21,7 +21,7 @@
 
 <main>
     <Navbar color="dark" dark expand="md">
-        <NavbarBrand>Car Parking System</NavbarBrand>
+        <NavbarBrand href="/AdminDashboard">Car Parking System</NavbarBrand>
         <Nav class="ms-auto" navbar>
             <NavItem>
                 <button class="primary" on:click={nav1}>Data</button>
