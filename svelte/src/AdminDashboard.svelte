@@ -3,7 +3,7 @@
 </svelte:head>
 
 <script>
-    import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "sveltestrap/src";
+    import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
     import Data from "./Data.svelte";
     import Employees from "./Employees.svelte";
     import Spaces from "./Spaces.svelte";
@@ -34,12 +34,13 @@
             </NavItem>
         </Nav>
     </Navbar>
-    {#if navv == 1}
-        <Data/>
-    {:else if navv == 2}
+    <br>
+    {#if navv == 2}
         <Employees/>
     {:else if navv == 3}
         <Spaces/>
+    {:else}
+        <Data/>
     {/if}
 </main>
 

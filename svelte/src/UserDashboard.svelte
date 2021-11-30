@@ -4,7 +4,7 @@
 
 <script>
 import { navigate } from "svelte-navigator";
-import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "sveltestrap/src";
+import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
     import { login } from "./stores";
 
     const signOut = () => {
@@ -16,41 +16,43 @@ import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Nav
         });
     }
     
+    const nav = () => {
+        navigate("UserProfile");
+    }
 </script>
 
 <main>
     <Navbar color="dark" dark expand="md">
         <NavbarBrand href="/UserDashboard">Car Parking System</NavbarBrand>
-        <button class="green" on:click={signOut}>Sign Out</button>
+        <Nav class="ms-auto" navbar>
+            <NavItem>
+                <button class="orange" on:click={nav}>View Profile</button>
+            </NavItem>
+            <NavItem>
+                <button class="green" on:click={signOut}>Sign Out</button>
+            </NavItem>
+        </Nav>
     </Navbar>
     <p>{$login}</p>
     <h1>Book your slot here</h1>
     <h6>Location</h6>
-    <Dropdown>
-        <DropdownToggle caret>Location</DropdownToggle>
-        <DropdownMenu>
-            <DropdownItem>Delhi</DropdownItem>
-            <DropdownItem>Mumbai</DropdownItem>
-            <DropdownItem>Chennai</DropdownItem>
-            <DropdownItem>Hyderabad</DropdownItem>
-        </DropdownMenu>
-    </Dropdown>
-    <br>
+    <select>
+        <option>Delhi</option>
+        <option>Mumbai</option>
+        <option>Chennai</option>
+        <option>Hyderabad</option>
+    </select>
+    <br><br>
     <h6>Date</h6>
     <input type="date"><br><br>
     <h6>Checkin</h6>
     <input type="time"><br><br>
     <h6>Checkout</h6>
     <input type="time"><br><br>
+    <button class="blue">Book Slot</button>
 </main>
 
 <style>
-    main {
-		text-align: center;
-		padding: 1em;
-		margin: 0 auto;
-	}
-
     h1 {
 		color: #ff3e00;
 		text-transform: uppercase;
@@ -60,9 +62,20 @@ import { Button, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Nav
 
     button {
         border-radius: 5px;
+        margin: 5px;
+    }
+
+    .orange {
+        background-color: rgb(255, 112, 60);
     }
 
     .green {
         background-color: chartreuse;
+    }
+
+    .blue {
+        background-color: royalblue;
+        color: white;
+        border: 2px solid black;
     }
 </style>

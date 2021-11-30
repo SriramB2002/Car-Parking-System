@@ -8,6 +8,7 @@
 	import AdminDashboard from "./AdminDashboard.svelte";
 	import WorkerDashboard from "./WorkerDashboard.svelte";
 	import UserDashboard from "./UserDashboard.svelte";
+	import UserProfile from "./UserProfile.svelte";
 </script>
 
 <Router>
@@ -20,6 +21,7 @@
 		<Route path="AdminDashboard"><AdminDashboard/></Route>
 		<Route path="WorkerDashboard"><WorkerDashboard/></Route>
 		<Route path="UserDashboard"><UserDashboard/></Route>
+		<Route path="UserProfile"><UserProfile/></Route>
 	</main>
 </Router>
 
