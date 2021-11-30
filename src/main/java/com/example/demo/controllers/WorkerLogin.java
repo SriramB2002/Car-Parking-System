@@ -31,16 +31,12 @@ public class WorkerLogin {
         if(document.exists()) {
             if(document.toObject(Worker.class).getPass().equals(worker.getPass())) return document.toObject(Worker.class);
             else {
-                Worker u = new Worker();
-                u.setName("incorrect password");
-                return u;
+                return null;
             }
         }
 
         else {
-            Worker u = new Worker();
-            u.setName("not found");
-            return u;
+            return null;
         }
     }
 }

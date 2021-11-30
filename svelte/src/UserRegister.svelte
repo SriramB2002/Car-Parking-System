@@ -36,7 +36,7 @@
 
 <main>
     <h2>User Registration Details</h2>
-    <form class="enter" on:submit={register}>
+    <form class="enter" on:submit|preventDefault={register}>
         <label for="firstname">First Name:</label>
         <input type="text" placeholder="First Name" required bind:value={f}>
         <label for="lastname">Last Name:</label>

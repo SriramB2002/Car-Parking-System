@@ -1,7 +1,11 @@
 package com.example.demo.entity;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class User {
 
+    private static final AtomicInteger count = new AtomicInteger(0);
+    private int id;
     private String first_name;
     private String last_name;
     private String username;
@@ -10,6 +14,18 @@ public class User {
     private String address;
     private String car_reg;
     private String mobile;
+
+    public User() {
+        id = count.incrementAndGet();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setAddress(String address) {
         this.address = address;
