@@ -8,4 +8,5 @@
         <option>Student Activity Center</option>
     </select><br><br>
     <button>Add Parking Space</button>
+    <button>Delete Parking Space</button>
 </main>
