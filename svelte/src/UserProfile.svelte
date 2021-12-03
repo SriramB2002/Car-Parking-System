@@ -27,7 +27,18 @@
     </Navbar>
     <br>
     <TabContent vertical pills>
-        <TabPane tabId="1" tab="My Profile" active></TabPane>
+        <TabPane tabId="1" tab="My Profile" active>
+            <ul class="list">
+                <li>Name: </li>
+                <li>Username: </li>
+                <li>Password: </li>
+                <li>Residential Address: </li>
+                <li>Email ID: </li>
+                <li>Mobile Number: </li>
+                <li>Car Model</li>
+                <li>Car Registration Number: </li>
+            </ul>
+        </TabPane>
         <TabPane tabId="2" tab="My Bookings"></TabPane>
     </TabContent>
 </main>
@@ -40,5 +51,9 @@
 
     .green {
         background-color: chartreuse;
+    }
+
+    .list {
+        list-style-type: none;
     }
 </style>
