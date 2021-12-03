@@ -4,7 +4,7 @@
 
 <script>
     import { navigate } from "svelte-navigator";
-    import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
+    import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane } from "sveltestrap/src";
 
     const signOut = () => {
         const auth2 = gapi.auth2.getAuthInstance();
@@ -25,6 +25,11 @@
             </NavItem>
         </Nav>
     </Navbar>
+    <br>
+    <TabContent vertical pills>
+        <TabPane tabId="1" tab="My Profile" active></TabPane>
+        <TabPane tabId="2" tab="My Bookings"></TabPane>
+    </TabContent>
 </main>
 
 <style>

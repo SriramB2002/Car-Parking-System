@@ -3,20 +3,10 @@
 </svelte:head>
 
 <script>
-    import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
+    import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane } from "sveltestrap/src";
     import Data from "./Data.svelte";
     import Employees from "./Employees.svelte";
     import Spaces from "./Spaces.svelte";
-    let navv = 0;
-    const nav1 = () => {
-        navv = 1;
-    }
-    const nav2 = () => {
-        navv = 2;
-    }
-    const nav3 = () => {
-        navv = 3;
-    }
 </script>
 
 <main>
@@ -24,49 +14,25 @@
         <NavbarBrand href="/AdminDashboard">Car Parking System</NavbarBrand>
         <Nav class="ms-auto" navbar>
             <NavItem>
-                <button class="primary" on:click={nav1}>Data</button>
-            </NavItem>
-            <NavItem>
-                <button class="warning" on:click={nav2}>Employees</button>
-            </NavItem>
-            <NavItem>
-                <button class="success" on:click={nav3}>Spaces</button>
+                <button class="green">Sign Out</button>
             </NavItem>
         </Nav>
     </Navbar>
     <br>
-    {#if navv == 2}
-        <Employees/>
-    {:else if navv == 3}
-        <Spaces/>
-    {:else}
-        <Data/>
-    {/if}
+    <TabContent pills>
+        <TabPane tabId="1" tab="Data" active><Data/></TabPane>
+        <TabPane tabId="2" tab="Employees"><Employees/></TabPane>
+        <TabPane tabId="3" tab="Spaces"><Spaces/></TabPane>
+    </TabContent>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		margin: 0 auto;
-	}
-
     button {
         border-radius: 5px;
         margin: 5px;
     }
 
-    .primary {
-        background-color: #61a0fe;
-        color: white;
-    }
-
-    .warning {
-        background-color: #ffd65d;
-    }
-
-    .success {
-        background-color: #68b08f;
-        color: white;
+    .green {
+        background-color: chartreuse;
     }
 </style>

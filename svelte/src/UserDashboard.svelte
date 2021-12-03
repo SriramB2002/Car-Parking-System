@@ -4,7 +4,7 @@
 
 <script>
 import { navigate } from "svelte-navigator";
-import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
+import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText } from "sveltestrap/src";
     import { login } from "./stores";
 
     const signOut = () => {
@@ -19,6 +19,12 @@ import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
     const nav = () => {
         navigate("UserProfile");
     }
+
+    let bool = 0;
+    const check = () => {
+        bool = true;
+    }
+    let choice;
 </script>
 
 <main>
@@ -35,21 +41,85 @@ import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
     </Navbar>
     <p>{$login}</p>
     <h1>Book your slot here</h1>
-    <h6>Location</h6>
-    <select>
-        <option>Delhi</option>
-        <option>Mumbai</option>
-        <option>Chennai</option>
-        <option>Hyderabad</option>
-    </select>
-    <br><br>
-    <h6>Date</h6>
-    <input type="date"><br><br>
-    <h6>Checkin</h6>
-    <input type="time"><br><br>
-    <h6>Checkout</h6>
-    <input type="time"><br><br>
-    <button class="blue">Book Slot</button>
+    <form on:submit|preventDefault={check}>
+        <h6>Location</h6>
+        <select bind:value={choice} required>
+            <option></option>
+            <option>Entrance Gate</option>
+            <option>Connaught Place</option>
+            <option>Academics Block</option>
+            <option>Student Activity Center</option>
+        </select>
+        <br><br>
+        <h6>Date</h6>
+        <input type="date" required><br><br>
+        <h6>Checkin</h6>
+        <input type="time" required><br><br>
+        <h6>Checkout</h6>
+        <input type="time" required><br><br>
+        <button class="blue" type="submit">Find Slots</button>
+    </form>
+    {#if bool}
+        {#if choice == "Entrance Gate"}
+            <div class="flex">
+                <Card class="col-lg-2" style="margin: 10px">
+                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                    <CardBody style="background-color: #99ff99">
+                        <CardText>
+                            <p>Price: </p>
+                            <p>Worker: </p>
+                            <p>Worker Rating: </p>
+                        </CardText>
+                        <button>Book Slot</button>
+                    </CardBody>
+                </Card>
+                <Card class="col-lg-2" style="margin: 10px">
+                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                    <CardBody style="background-color: #99ff99">
+                        <CardText>
+                            <p>Price: </p>
+                            <p>Worker: </p>
+                            <p>Worker Rating: </p>
+                        </CardText>
+                        <button>Book Slot</button>
+                    </CardBody>
+                </Card>
+                <Card class="col-lg-2" style="margin: 10px">
+                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                    <CardBody style="background-color: #99ff99">
+                        <CardText>
+                            <p>Price: </p>
+                            <p>Worker: </p>
+                            <p>Worker Rating: </p>
+                        </CardText>
+                        <button>Book Slot</button>
+                    </CardBody>
+                </Card>
+                <Card class="col-lg-2" style="margin: 10px">
+                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                    <CardBody style="background-color: #99ff99">
+                        <CardText>
+                            <p>Price: </p>
+                            <p>Worker: </p>
+                            <p>Worker Rating: </p>
+                        </CardText>
+                        <button>Book Slot</button>
+                    </CardBody>
+                </Card>
+                <Card class="col-lg-2" style="margin: 10px">
+                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                    <CardBody style="background-color: #99ff99">
+                        <CardText>
+                            <p>Price: </p>
+                            <p>Worker: </p>
+                            <p>Worker Rating: </p>
+                        </CardText>
+                        <button>Book Slot</button>
+                    </CardBody>
+                </Card>
+            </div>
+        {/if}
+    {/if}
 </main>
 
 <style>
@@ -77,5 +147,10 @@ import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src";
         background-color: royalblue;
         color: white;
         border: 2px solid black;
+    }
+
+    .flex {
+        margin-left: 75px;
+        display: flex;
     }
 </style>
