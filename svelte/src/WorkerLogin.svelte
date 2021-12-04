@@ -5,15 +5,9 @@ import { worker } from "./stores";
     let name = '', pass = '';
 
     async function post() {
-        const res = await fetch("http://localhost:8080/checkin", {
-            method: 'POST',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify({
-                "name": name,
-                "pass": pass
-            })
-        })
+        const res = await fetch("http://localhost:8080/checkin?name=" + name + "&pass=" + pass);
         const resp = await res.json();
+        console.log(resp);
         worker.set(resp);
 
         navigate("WorkerDashboard");

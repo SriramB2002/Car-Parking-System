@@ -11,5 +11,13 @@ export const login = writable({
     mobile: "",
     email: ""
 })
-export const worker = writable({})
+
+export const worker = writable({
+    id: -1,
+    name: "",
+    pass: "",
+    rating: 0,
+    service: "",
+    slotID: -1
+})
 export const admin = writable(0)

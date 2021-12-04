@@ -25,6 +25,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class WorkerCRUD {
 
     @CrossOrigin(origins = "http://localhost:5000")
+    @GetMapping("/checkin")
+    @ResponseBody
+    public Worker login(@RequestParam(name = "name") String name, @RequestParam(name = "pass") String pass) throws Exception {
+        Firestore database = FirestoreClient.getFirestore();
+        // asynchronously retrieve the document
+        List<QueryDocumentSnapshot> workers = database.collection("workers").whereEqualTo("name", name).whereEqualTo("pass", pass).get().get().getDocuments();
+
+        if(!workers.isEmpty()) {
+            return workers.get(0).toObject(Worker.class); 
+        }
+
+        else {
+            return null;
+        }
+        
+    }
+
+    @CrossOrigin(origins = "http://localhost:5000")
     @GetMapping("/getworkers")
     public @ResponseBody List<Worker> getAll() throws Exception{
 

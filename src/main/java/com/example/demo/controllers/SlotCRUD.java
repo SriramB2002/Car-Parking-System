@@ -26,12 +26,12 @@ public class SlotCRUD {
     
     @CrossOrigin(origins = "http://localhost:5000")
     @PostMapping("/add")
-    public String addSpace(@RequestParam(name = "space") String space) throws Exception {
+    public String addSpace(@RequestParam(name = "space") String space, @RequestParam(name = "slots") int slots) throws Exception {
         Firestore database = FirestoreClient.getFirestore();
 
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < slots; i++) {
             Slot s = new Slot(space);
-            database.collection("slots").document().set(s);
+            database.collection("slots").document(String.valueOf(s.getId())).set(s);
         }
         return "SUCCESS";
     }
@@ -57,6 +57,22 @@ public class SlotCRUD {
         }
 
         return getList;
+    }
+
+    @CrossOrigin(origins = "http://localhost:5000")
+    @GetMapping("/getSlot")
+    @ResponseBody
+    public Slot getSlots(@RequestParam(name = "id") int id) throws Exception {
+        Firestore database = FirestoreClient.getFirestore();
+        DocumentSnapshot slot = database.collection("slots").document(String.valueOf(id)).get().get();
+
+        if(slot.exists()) {
+            return slot.toObject(Slot.class);
+        }
+
+        else {
+            return null;
+        }
     }
 
     @CrossOrigin(origins = "http://localhost:5000")

@@ -16,7 +16,7 @@ public class DemoApplication {
 	public static void main(String[] args) {
 
 		try {
-			InputStream serviceAccount = new FileInputStream("D:/BITS - Hyderabad/Courses/CS F213/OOPS Project/demo/demo/src/main/java/com/example/demo/config/fire_config.json");
+			InputStream serviceAccount = new FileInputStream("config/fire_config.json");
 			GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
 			FirebaseOptions options = new FirebaseOptions.Builder()
     			.setCredentials(credentials)

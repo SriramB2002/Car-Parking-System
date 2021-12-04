@@ -13,6 +13,10 @@ public class Slot {
         location = s;
     }
 
+    public Slot() {
+        id = count.incrementAndGet();
+    }
+
     public int getId() {
         return id;
     }

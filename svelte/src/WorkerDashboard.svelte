@@ -5,22 +5,51 @@
 <script>
     import { worker } from "./stores";
     import { Navbar, NavbarBrand, Nav, NavItem } from "sveltestrap/src"
-</script>
+import { navigate } from "svelte-navigator";
+
+    let promise = getSlot();
+
+    async function getSlot() {
+        const res = await fetch("http://localhost:8080/getSlot?id=" + $worker.slotID, {
+            headers: {'content-type': 'application/json'}
+        });
+        const resp = await res.json();
+        console.log(resp);
+        return resp;
+    }
+
+    function logOut() {
+        worker.set({
+            id: -1,
+            name: "",
+            pass: "",
+            rating: 0,
+            service: "",
+            slotID: -1
+        })
+
+        navigate("WorkerLogin");
+    }
+</script> 
 
 <main>
     <Navbar color="dark" dark expand="md">
         <NavbarBrand href="/WorkerDashboard">Car Parking System</NavbarBrand>
         <Nav class="ms-auto" navbar>
             <NavItem>
-                <button class="green">Sign Out</button>
+                <button class="green" on:click={logOut}>Sign Out</button>
             </NavItem>
         </Nav>
     </Navbar>
     <br>
-    <h1>{$worker}</h1>
-    <p class="rating">Rating: </p>
-    <h3>Parking Space: </h3>
-    <h3>Slot: </h3>
+    <p class="rating">Rating: {$worker.rating}</p>
+
+    {#await promise}
+        <p>Loading slot info...</p>
+    {:then slot}
+    <h3>Parking Space: {slot.location}</h3>
+    <h3>Slot: {slot.id}</h3>
+    {/await}
     <br>
     <p>Choose your service: 
         <select>
