@@ -18,7 +18,7 @@
     </Navbar>
     <br>
     <h1>{$worker}</h1>
-    <p>Rating: </p>
+    <p class="rating">Rating: </p>
     <h3>Parking Space: </h3>
     <h3>Slot: </h3>
     <br>
@@ -44,6 +44,11 @@
     button {
         border-radius: 5px;
         margin: 5px;
+    }
+
+    .rating {
+        font-size: 1.5em;
+        color: green;
     }
 
     .green {
