@@ -19,9 +19,11 @@
             headers: {'content-type': 'application/json'}
         })
 
-        if(res.ok) {
-            promise = getList();
-        }
+        const resp = await res.text();
+        console.log(resp);
+
+        promise = getList();
+        
 
     }
 
@@ -45,9 +47,7 @@
         const resp = await res.text();
         console.log(resp);
 
-        if(res.ok) {
-            promise = getList();
-        }
+        promise = getList();
 
         toggle = 0;
     }
@@ -68,7 +68,7 @@
             <tr>
                 <td>{w.id}</td>
                 <td>{w.name}</td>
-                <td><Button on:click={remove(w.id)}>Remove</Button></td>
+                <td><button on:click={remove(w.id)}>Remove</button></td>
             </tr>
             {/each} 
             

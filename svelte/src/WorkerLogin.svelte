@@ -13,9 +13,8 @@ import { worker } from "./stores";
                 "pass": pass
             })
         })
-        const resp = await res.text();
+        const resp = await res.json();
         worker.set(resp);
-        console.log(resp);
 
         navigate("WorkerDashboard");
     }

@@ -5,12 +5,23 @@
 <script>
     import { navigate } from "svelte-navigator";
     import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane } from "sveltestrap/src";
+import { login } from "./stores";
 
     const signOut = () => {
         const auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(() => {
             console.log("SIGNED OUT");
-            login.set("");
+            login.set({
+                id: -1,
+                first_name: "",
+                last_name: "",
+                username: "",
+                password: "",
+                address: "",
+                car_reg: "",
+                mobile: "",
+                email: ""
+            });
             navigate("UserLogin");
         });
     }
@@ -36,14 +47,12 @@
     <TabContent vertical pills>
         <TabPane tabId="1" tab="My Profile" active>
             <ul class="list">
-                <li>Name: </li>
-                <li>Username: </li>
-                <li>Password: </li>
-                <li>Residential Address: </li>
-                <li>Email ID: </li>
-                <li>Mobile Number: </li>
+                <li>Name: {$login.first_name + " " + $login.last_name}</li>
+                <li>Residential Address: {$login.address}</li>
+                <li>Email ID: {$login.email}</li>
+                <li>Mobile Number: {$login.mobile}</li>
                 <li>Car Model</li>
-                <li>Car Registration Number: </li>
+                <li>Car Registration Number: {$login.car_reg}</li>
             </ul>
         </TabPane>
         <TabPane tabId="2" tab="My Bookings"></TabPane>

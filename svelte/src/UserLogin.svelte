@@ -18,29 +18,31 @@
     }
 
     async function post() {
-        const res = await fetch("http://localhost:8080/login", {
-            method: 'POST',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify({
-                "username": username,
-                "password": password
-            })
-        })
-        const resp = await res.text();
+        const res = await fetch("http://localhost:8080/login?uname=" + username + "&pass=" + password)
+        const resp = await res.json();
 
         if(resp != ""){ 
             login.set(resp); 
             navigate("UserDashboard");
         }
 
-        else login.set("wrong");
+        else login.set({});
 
         console.log(resp);
-
     }
 
     window.onSignIn = (googleUser) => {
-        login.set(googleUser.getBasicProfile().getName())
+        login.set({
+                id: -5,
+                first_name: googleUser.getBasicProfile().getName(),
+                last_name: "",
+                username: googleUser.getBasicProfile().getName(),
+                password: googleUser.getBasicProfile().getId(),
+                address: "",
+                car_reg: "",
+                mobile: "",
+                email: googleUser.getBasicProfile().getEmail()
+            });
         navigate("UserDashboard");
   };
     

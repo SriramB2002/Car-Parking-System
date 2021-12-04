@@ -11,7 +11,17 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
         const auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(() => {
             console.log("SIGNED OUT");
-            login.set("");
+            login.set({
+                id: -1,
+                first_name: "",
+                last_name: "",
+                username: "",
+                password: "",
+                address: "",
+                car_reg: "",
+                mobile: "",
+                email: ""
+            });
             navigate("UserLogin");
         });
     }
@@ -25,6 +35,15 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
         bool = true;
     }
     let choice;
+
+    async function getSpaces() {
+        const res = await fetch("http://localhost:8080/getSpaces");
+        const resp = await res.json();
+
+        return resp;
+    }
+
+    let promise = getSpaces();
 </script>
 
 <main>
@@ -43,13 +62,18 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
     <h1>Book your slot here</h1>
     <form on:submit|preventDefault={check}>
         <h6>Location</h6>
+        {#await promise}
+            <p>Loading spaces...</p>
+        {:then spaces} 
         <select bind:value={choice} required>
             <option></option>
-            <option>Entrance Gate</option>
-            <option>Connaught Place</option>
-            <option>Academics Block</option>
-            <option>Student Activity Center</option>
+            {#each spaces as elem}
+                <option>{elem}</option>
+            {/each}
         </select>
+            
+        {/await}
+        
         <br><br>
         <h6>Date</h6>
         <input type="date" required><br><br>

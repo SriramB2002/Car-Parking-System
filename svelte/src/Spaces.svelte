@@ -1,3 +1,8 @@
+<script>
+    
+</script>
+
+
 <main>
     <p>Parking space:</p>
     <select>

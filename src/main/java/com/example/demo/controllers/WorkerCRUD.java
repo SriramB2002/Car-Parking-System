@@ -44,7 +44,7 @@ public class WorkerCRUD {
     public String add(@RequestBody Worker worker) throws Exception{
 
         Firestore database = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> result = database.collection("workers").document(worker.getName()).set(worker);
+        ApiFuture<WriteResult> result = database.collection("workers").document(String.valueOf(worker.getId())).set(worker);
         return result.get().getUpdateTime().toString();
 
     }
