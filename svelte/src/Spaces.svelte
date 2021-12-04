@@ -1,5 +1,8 @@
 <script>
-    
+    let space_input = 0;
+    const tog = () => {
+        space_input = 1;
+    }
 </script>
 
 
@@ -12,6 +15,11 @@
         <option>Academics Block</option>
         <option>Student Activity Center</option>
     </select><br><br>
-    <button>Add Parking Space</button>
+    <button on:click={tog}>Add Parking Space</button>
     <button>Delete Parking Space</button>
+    <br><br>
+    {#if space_input}
+        <input type="text" placeholder="Space">
+        <button>Update</button>
+    {/if}
 </main>
