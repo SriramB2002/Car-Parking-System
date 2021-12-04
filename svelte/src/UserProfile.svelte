@@ -14,6 +14,13 @@
             navigate("UserLogin");
         });
     }
+
+    let bool = 0;
+    const check = () => {
+        bool = 1;
+    }
+
+    let amt = 0;
 </script>
 
 <main>
@@ -40,6 +47,14 @@
             </ul>
         </TabPane>
         <TabPane tabId="2" tab="My Bookings"></TabPane>
+        <TabPane tabId="3" tab="My Finances">
+            <p>Balance in Account: </p>
+            <input type="number" bind:value={amt}>
+            <button on:click={check}>Add Money</button>
+            {#if bool}
+                <p class="green-text">Rs. {amt} added to account successfully!</p>
+            {/if}
+        </TabPane>
     </TabContent>
 </main>
 
@@ -51,6 +66,10 @@
 
     .green {
         background-color: chartreuse;
+    }
+
+    .green-text {
+        color: green;
     }
 
     .list {
