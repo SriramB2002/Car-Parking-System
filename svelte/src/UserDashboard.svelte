@@ -3,8 +3,8 @@
 </svelte:head>
 
 <script>
-import { navigate } from "svelte-navigator";
-import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText } from "sveltestrap/src";
+    import { navigate } from "svelte-navigator";
+    import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText, Modal, ModalHeader, ModalBody } from "sveltestrap/src";
     import { login } from "./stores";
 
     const signOut = () => {
@@ -30,9 +30,14 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
         navigate("UserProfile");
     }
 
-    let bool = 0;
+    let bool = false;
     const check = () => {
         bool = true;
+    }
+
+    let bool1 = false;
+    const openmodal = () => {
+        bool1 = !bool1;
     }
     let choice;
 
@@ -92,10 +97,9 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
                     <CardBody style="background-color: #99ff99">
                         <CardText>
                             <p>Price: </p>
-                            <p>Worker: </p>
-                            <p>Worker Rating: </p>
+                            <p>Car Type: </p>
                         </CardText>
-                        <button>Book Slot</button>
+                        <button on:click={openmodal}>Select Slot</button>
                     </CardBody>
                 </Card>
                 <Card class="col-lg-2" style="margin: 10px">
@@ -103,10 +107,9 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
                     <CardBody style="background-color: #99ff99">
                         <CardText>
                             <p>Price: </p>
-                            <p>Worker: </p>
-                            <p>Worker Rating: </p>
+                            <p>Car Type: </p>
                         </CardText>
-                        <button>Book Slot</button>
+                        <button on:click={openmodal}>Select Slot</button>
                     </CardBody>
                 </Card>
                 <Card class="col-lg-2" style="margin: 10px">
@@ -114,10 +117,9 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
                     <CardBody style="background-color: #99ff99">
                         <CardText>
                             <p>Price: </p>
-                            <p>Worker: </p>
-                            <p>Worker Rating: </p>
+                            <p>Car Type: </p>
                         </CardText>
-                        <button>Book Slot</button>
+                        <button on:click={openmodal}>Select Slot</button>
                     </CardBody>
                 </Card>
                 <Card class="col-lg-2" style="margin: 10px">
@@ -125,10 +127,9 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
                     <CardBody style="background-color: #99ff99">
                         <CardText>
                             <p>Price: </p>
-                            <p>Worker: </p>
-                            <p>Worker Rating: </p>
+                            <p>Car Type: </p>
                         </CardText>
-                        <button>Book Slot</button>
+                        <button on:click={openmodal}>Select Slot</button>
                     </CardBody>
                 </Card>
                 <Card class="col-lg-2" style="margin: 10px">
@@ -136,14 +137,28 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
                     <CardBody style="background-color: #99ff99">
                         <CardText>
                             <p>Price: </p>
-                            <p>Worker: </p>
-                            <p>Worker Rating: </p>
+                            <p>Car Type: </p>
                         </CardText>
-                        <button>Book Slot</button>
+                        <button on:click={openmodal}>Select Slot</button>
                     </CardBody>
                 </Card>
             </div>
         {/if}
+    {/if}
+    {#if bool1}
+        <Modal isOpen={bool1}>
+            <ModalHeader>Preferences</ModalHeader>
+            <ModalBody>
+                <p>Services: 
+                    <select>
+                        <option></option>
+                        <option>Dry Cleaning</option>
+                        <option>Car Washing</option>
+                        <option>Repair & Maintenance</option>
+                    </select>
+                </p>
+            </ModalBody>
+        </Modal>
     {/if}
 </main>
 

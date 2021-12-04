@@ -1,4 +1,6 @@
 <script>
+import { Table } from "sveltestrap";
+
     let space_input = 0;
     const tog = () => {
         space_input = 1;
@@ -53,5 +55,22 @@
             <p>No.of Parking Slots: <input type="number" placeholder="Number of Slots" required bind:value={slots}></p>
             <button type="submit">Update</button>
         </form>
+    {/if}
+
+    {#if choice == "Entrance Gate"}
+        <Table bordered style="margin-left: 125px;">
+            <tr>
+                <th>#</th>
+                <th>Slots</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Slot 1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Slot 2</td>
+            </tr>
+        </Table>
     {/if}
 </main>
