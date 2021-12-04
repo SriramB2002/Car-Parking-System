@@ -58,7 +58,8 @@ import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText
             </NavItem>
         </Nav>
     </Navbar>
-    <p>{$login}</p>
+    <br>
+    <h3>Hello {$login.first_name} {$login.last_name}!</h3>
     <h1>Book your slot here</h1>
     <form on:submit|preventDefault={check}>
         <h6>Location</h6>
