@@ -17,9 +17,11 @@
         </Nav>
     </Navbar>
     <br>
-    <p>{$worker}</p>
+    <h1>{$worker}</h1>
     <p>Rating: </p>
-    <h3>Your Slot is: </h3>
+    <h3>Parking Space: </h3>
+    <h3>Slot: </h3>
+    <br>
     <p>Choose your service: 
         <select>
             <option></option>
@@ -32,6 +34,13 @@
 </main>
 
 <style>
+	h1 {
+		color: #ff3e00;
+		text-transform: uppercase;
+		font-size: 2em;
+		font-weight: 100;
+	}
+
     button {
         border-radius: 5px;
         margin: 5px;
