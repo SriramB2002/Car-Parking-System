@@ -8,10 +8,6 @@
 
     let username = "", password = "";
     let r;
-
-    login.subscribe(x => {
-        r = x;
-    })
     
     const nav1 = () => {
         navigate("UserRegister");
@@ -19,16 +15,17 @@
 
     async function post() {
         const res = await fetch("http://localhost:8080/login?uname=" + username + "&pass=" + password)
-        const resp = await res.json();
-
-        if(resp != ""){ 
+        
+        try {
+            const resp = await res.json();
             login.set(resp); 
             navigate("UserDashboard");
         }
 
-        else login.set({});
+        catch(err) {
+            r = "wrong";
+        }
 
-        console.log(resp);
     }
 
     window.onSignIn = (googleUser) => {

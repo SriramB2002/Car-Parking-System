@@ -3,10 +3,18 @@
 </svelte:head>
 
 <script>
+import { navigate } from "svelte-navigator";
+
     import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane } from "sveltestrap/src";
     import Data from "./Data.svelte";
     import Employees from "./Employees.svelte";
     import Spaces from "./Spaces.svelte";
+import { admin } from "./stores";
+
+    function signOut() {
+        admin.set(0);
+        navigate("AdminLogin");
+    }
 </script>
 
 <main>
@@ -14,7 +22,7 @@
         <NavbarBrand href="/AdminDashboard">Car Parking System</NavbarBrand>
         <Nav class="ms-auto" navbar>
             <NavItem>
-                <button class="green">Sign Out</button>
+                <button class="green" on:click={signOut}>Sign Out</button>
             </NavItem>
         </Nav>
     </Navbar>

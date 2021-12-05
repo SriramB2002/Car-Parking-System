@@ -30,6 +30,19 @@ import { navigate } from "svelte-navigator";
 
         navigate("WorkerLogin");
     }
+
+    let service = "";
+
+    if($worker.service != null) service = $worker.service;
+
+    async function updateService() {
+        const res = await fetch("http://localhost:8080/update?service=" + service + "&id=" + $worker.id, {
+            method: 'POST',
+            headers: {'content-type': 'application/json'}
+        });
+
+        const resp = await res.text();
+    }
 </script> 
 
 <main>
@@ -52,14 +65,14 @@ import { navigate } from "svelte-navigator";
     {/await}
     <br>
     <p>Choose your service: 
-        <select>
+        <select bind:value={service}>
             <option></option>
             <option>Dry Cleaning</option>
             <option>Car Washing</option>
-            <option>Repair & Maintenance</option>
+            <option>Repair Work</option>
         </select>
     </p>
-    <button>Submit</button>
+    <button on:click={updateService}>Submit</button>
 </main>
 
 <style>

@@ -85,5 +85,19 @@ public class WorkerCRUD {
         else return "ERROR";
 
     }
+
+    @CrossOrigin(origins = "http://localhost:5000")
+    @PostMapping("/update")
+    public String update(@RequestParam(name = "service") String service, @RequestParam(name = "id") int id) throws Exception{
+
+        Firestore database = FirestoreClient.getFirestore();
+        DocumentReference docRef = database.collection("workers").document(String.valueOf(id));
+        // ...
+        // future.get() blocks on response
+        ApiFuture<WriteResult> future = docRef.update("service", service);
+
+        return future.get().toString();
+
+    }
     
 }
