@@ -162,7 +162,7 @@ import { get_slot_changes } from "svelte/internal";
                         {#if slot.isRecommended}
                             <td class="rec">Recommended</td>
                         {:else}
-                            <td></td>
+                            <td class="notrec">Not Recommended</td>
                         {/if}
                         {#if slot.isFree}
                             <td><div><Button on:click={openmodal(slots)} color="dark">Select Slot</Button></div></td>
@@ -213,7 +213,7 @@ import { get_slot_changes } from "svelte/internal";
                 {/if}
             </ModalBody>
             <ModalFooter>
-                {#if ((drycleaning && dryworker != "")|| (carwashing && washworker != "") || (repair && repairworker != ""))}
+                {#if ((drycleaning || carwashing || repair) && (!drycleaning || dryworker != "") && (!carwashing || washworker != "") && (!repair || repairworker != ""))}
                     <Button color="success">Make Payment</Button>
                 {/if}
                 <Button color="danger" on:click={openmodal}>Close</Button>
@@ -260,5 +260,9 @@ import { get_slot_changes } from "svelte/internal";
 
     .rec {
         color: green;
+    }
+
+    .notrec {
+        color: red;
     }
 </style>
