@@ -164,13 +164,13 @@ public class SlotCRUD {
                 LocalDateTime date1 = LocalDateTime.of(date, in);
                 LocalDateTime date2 = LocalDateTime.of(date, out);
 
-                long req_in = date1.toEpochSecond(OffsetDateTime.now().getOffset());
-                long req_out = date2.toEpochSecond(OffsetDateTime.now().getOffset());
+                long req_in = date1.toEpochSecond(OffsetDateTime.now().getOffset()) * 1000;
+                long req_out = date2.toEpochSecond(OffsetDateTime.now().getOffset()) * 1000;
 
                 
 
-                long given_in = booking.getTimestamp("check_in").getSeconds();
-                long given_out = booking.getTimestamp("check_out").getSeconds();
+                long given_in = booking.getTimestamp("check_in").getSeconds() * 1000;
+                long given_out = booking.getTimestamp("check_out").getSeconds() * 1000;
 
                 if(booking.get("slotID").equals(document.get("id"))) {
                     if(!((req_in < given_in && req_out < given_in) || (req_in > given_out && req_out > given_out))) {

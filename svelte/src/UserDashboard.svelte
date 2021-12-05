@@ -93,7 +93,10 @@ import { get_slot_changes } from "svelte/internal";
         return resp;
     }
 
-    // slot.isFree = !slot.isFree;
+    function format(free) {
+        let f = new Date(free);
+        return f.toTimeString().split(' ')[0].substring(0, 5);
+    }
 
     let promise = getSpaces();
     let promise2;
@@ -161,10 +164,10 @@ import { get_slot_changes } from "svelte/internal";
                         {:else}
                             <td></td>
                         {/if}
-                        {#if !slot.isFree}
+                        {#if slot.isFree}
                             <td><div><Button on:click={openmodal(slots)} color="dark">Select Slot</Button></div></td>
                         {:else}
-                            <td><div><Button disabled color="dark">Not Available</Button></div></td>
+                            <td><div><Button disabled color="dark">Available at {format(slot.freeTime)}</Button></div></td>
                         {/if}
                     </tr>
                     {/each}
