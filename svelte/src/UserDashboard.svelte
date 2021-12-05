@@ -4,6 +4,7 @@
 
 <script>
     import { navigate } from "svelte-navigator";
+import { get_slot_changes } from "svelte/internal";
     import { Navbar, NavbarBrand, Nav, NavItem, Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from "sveltestrap/src";
     import { login } from "./stores";
 
@@ -92,6 +93,8 @@
         return resp;
     }
 
+    // slot.isFree = !slot.isFree;
+
     let promise = getSpaces();
     let promise2;
 
@@ -146,15 +149,23 @@
                     <tr>
                         <th>Slot</th>
                         <th>Price</th>
-                        <th>Recommendation</th>
+                        <th></th>
                         <th></th>
                     </tr>
                     {#each slots as slot}
                     <tr>
                         <td>{"Slot " + slot.slot}</td>
-                        <td>{slot.isFree}</td>
-                        <td>{slot.isRecommended}</td>
-                        <td><div><Button on:click={openmodal(slots)} color="dark">Select Slot</Button></div></td>
+                        <td>0</td>
+                        {#if slot.isRecommended}
+                            <td class="rec">Recommended</td>
+                        {:else}
+                            <td></td>
+                        {/if}
+                        {#if !slot.isFree}
+                            <td><div><Button on:click={openmodal(slots)} color="dark">Select Slot</Button></div></td>
+                        {:else}
+                            <td><div><Button disabled color="dark">Not Available</Button></div></td>
+                        {/if}
                     </tr>
                     {/each}
                 </Table>
@@ -246,9 +257,5 @@
 
     .rec {
         color: green;
-    }
-
-    .notrec {
-        color: red;
     }
 </style>
