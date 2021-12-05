@@ -2,6 +2,12 @@
 import { Table } from "sveltestrap";
 
     let space_input = 0;
+    let space = "";
+    let slots = 0;
+    let promise = getSpaces();
+    let choice = "";
+    let promise2 = getSlots();
+
     const tog = () => {
         space_input = 1;
     }
@@ -22,12 +28,21 @@ import { Table } from "sveltestrap";
 
         console.log(resp);
         promise = getSpaces();
+        promise2 = getSlots();
+        space_input = 0;
     }
 
-    let space = "";
-    let slots = 0;
-    let promise = getSpaces();
-    let choice;
+    async function getSlots() {
+        const res = await fetch("http://localhost:8080/getSlots?space=" + choice);
+        const resp = await res.json();
+
+        return resp;
+    }
+
+    function refresh() {
+        promise2 = getSlots();
+    }
+
 </script>
 
 
@@ -36,10 +51,10 @@ import { Table } from "sveltestrap";
     {#await promise}
             <p>Loading spaces...</p>
         {:then spaces} 
-        <select bind:value={choice} required>
+        <select bind:value={choice} required on:change={refresh}>
             <option></option>
             {#each spaces as elem}
-                <option>{elem}</option>
+                <option value = {elem}>{elem}</option>
             {/each}
         </select>
             
@@ -57,20 +72,24 @@ import { Table } from "sveltestrap";
         </form>
     {/if}
 
-    {#if choice == "Entrance Gate"}
-        <Table bordered style="margin-left: 125px;">
+    <Table bordered style="margin-left: 125px;">
+        <thead>
+            <th>Slot</th>
+            <th>Space</th>
+        </thead>
+        {#await promise2}
+        <p>PLEASE WAIT</p>
+            
+        {:then slots}
+            {#each slots as s}
             <tr>
-                <th>#</th>
-                <th>Slots</th>
+                <td>{"Slot " + s.id}</td>
+                <td>{s.location}</td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Slot 1</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Slot 2</td>
-            </tr>
-        </Table>
-    {/if}
+            {/each} 
+            
+        {/await}
+        
+    </Table>
+
 </main>
