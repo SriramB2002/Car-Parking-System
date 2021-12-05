@@ -4,7 +4,7 @@
 
 <script>
     import { navigate } from "svelte-navigator";
-    import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText, Modal, ModalHeader, ModalBody, ModalFooter, Button } from "sveltestrap/src";
+    import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText, Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from "sveltestrap/src";
     import { login } from "./stores";
 
     const today = new Date();
@@ -120,78 +120,29 @@
         </form>
         {#if bool}
             {#if choice == "Entrance Gate"}
-                <div class="flex">
-                    <Card class="col-lg-2" style="margin: 10px">
-                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                        <CardBody style="background-color: #99ff99">
-                            <CardText>
-                                <p>Price: </p>
-                                <p>Car Type: </p>
-                            </CardText>
-                            <button on:click={openmodal}>Select Slot</button>
-                        </CardBody>
-                    </Card>
-                    <Card class="col-lg-2" style="margin: 10px">
-                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                        <CardBody style="background-color: #99ff99">
-                            <CardText>
-                                <p>Price: </p>
-                                <p>Car Type: </p>
-                            </CardText>
-                            <button on:click={openmodal}>Select Slot</button>
-                        </CardBody>
-                    </Card>
-                    <Card class="col-lg-2" style="margin: 10px">
-                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                        <CardBody style="background-color: #99ff99">
-                            <CardText>
-                                <p>Price: </p>
-                                <p>Car Type: </p>
-                            </CardText>
-                            <button on:click={openmodal}>Select Slot</button>
-                        </CardBody>
-                    </Card>
-                    <Card class="col-lg-2" style="margin: 10px">
-                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                        <CardBody style="background-color: #99ff99">
-                            <CardText>
-                                <p>Price: </p>
-                                <p>Car Type: </p>
-                            </CardText>
-                            <button on:click={openmodal}>Select Slot</button>
-                        </CardBody>
-                    </Card>
-                    <Card class="col-lg-2" style="margin: 10px">
-                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                        <CardBody style="background-color: #99ff99">
-                            <CardText>
-                                <p>Price: </p>
-                                <p>Car Type: </p>
-                            </CardText>
-                            <button on:click={openmodal}>Select Slot</button>
-                        </CardBody>
-                    </Card>
-                    <Card class="col-lg-2" style="margin: 10px">
-                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                        <CardBody style="background-color: #99ff99">
-                            <CardText>
-                                <p>Price: </p>
-                                <p>Car Type: </p>
-                            </CardText>
-                            <button on:click={openmodal}>Select Slot</button>
-                        </CardBody>
-                    </Card>
-                    <Card class="col-lg-2" style="margin: 10px">
-                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                        <CardBody style="background-color: #99ff99">
-                            <CardText>
-                                <p>Price: </p>
-                                <p>Car Type: </p>
-                            </CardText>
-                            <button on:click={openmodal}>Select Slot</button>
-                        </CardBody>
-                    </Card>
-                </div>
+                <Table bordered>
+                    <tr>
+                        <th>Slot</th>
+                        <th>Price</th>
+                        <th>Car Type</th>
+                        <th>Recommendation</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Slot 1</td>
+                        <td>You quote it</td>
+                        <td>Sedan</td>
+                        <td class="rec">Recommended</td>
+                        <td><div><Button color="dark">Select Slot</Button></div></td>
+                    </tr>
+                    <tr>
+                        <td>Slot 2</td>
+                        <td>You quote it</td>
+                        <td>SUV</td>
+                        <td class="notrec">Not Recommended</td>
+                        <td><div><Button color="dark">Select Slot</Button></div></td>
+                    </tr>
+                </Table>
             {/if}
         {/if}
         <Modal isOpen={bool1}>
@@ -276,8 +227,11 @@
         border: 2px solid black;
     }
 
-    .flex {
-        margin-left: 75px;
-        display: flex;
+    .rec {
+        color: green;
+    }
+
+    .notrec {
+        color: red;
     }
 </style>
