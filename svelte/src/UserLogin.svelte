@@ -28,9 +28,8 @@
 
     }
 
-    window.onSignIn = (googleUser) => {
+    window.onSignIn = async (googleUser) => {
         login.set({
-                id: -5,
                 first_name: googleUser.getBasicProfile().getName(),
                 last_name: "",
                 username: googleUser.getBasicProfile().getName(),
@@ -40,6 +39,23 @@
                 mobile: "",
                 email: googleUser.getBasicProfile().getEmail()
             });
+
+        const res = await fetch("http://localhost:8080/login?uname=" + googleUser.getBasicProfile().getName() + "&pass=" + googleUser.getBasicProfile().getId())
+        
+        try {
+            const resp = await res.json();
+            login.set(resp); 
+            
+        }
+
+        catch(err) {
+            const res = await fetch("http://localhost:8080/register", {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify($login)
+            })
+        }
+   
         navigate("UserDashboard");
   };
     

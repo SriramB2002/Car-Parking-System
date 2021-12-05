@@ -20,7 +20,8 @@
                 address: "",
                 car_reg: "",
                 mobile: "",
-                email: ""
+                email: "",
+                car_model: ""
             });
             navigate("UserLogin");
         });
@@ -36,8 +37,13 @@
         edit = true;
     }
 
-    const updateProfile = () => {
+    async function updateProfile(){
         edit = false;
+        const res = await fetch("http://localhost:8080/updateUser", {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify($login)
+         });
     }
     let amt = 0;
 </script>
@@ -74,7 +80,7 @@
                     </tr>
                     <tr>
                         <td>Car Model</td>
-                        <td></td>
+                        <td>{$login.car_model}</td>
                     </tr>
                     <tr>
                         <td>Car Registration Number:</td>
@@ -90,7 +96,7 @@
                     <p>Email ID <input type="text" bind:value={$login.email}></p>
                     <p>Mobile Number: <input type="text" bind:value={$login.mobile}></p>
                     <p>Car Model: 
-                        <select>
+                        <select bind:value={$login.car_model}>
                             <option></option>
                             <option>Sedan</option>
                             <option>SUV</option>
