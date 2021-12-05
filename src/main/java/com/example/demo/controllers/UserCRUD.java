@@ -78,5 +78,19 @@ public class UserCRUD {
 
         return getList;
     }
+
+    @CrossOrigin(origins = "http://localhost:5000")
+    @PostMapping("/updateUser")
+    public String update(@RequestBody User user) throws Exception{
+
+        Firestore database = FirestoreClient.getFirestore();
+        DocumentReference docRef = database.collection("users").document(user.getUsername());
+        // ...
+        // future.get() blocks on response
+        ApiFuture<WriteResult> future = docRef.set(user);
+
+        return future.get().toString();
+
+    }
     
 }
