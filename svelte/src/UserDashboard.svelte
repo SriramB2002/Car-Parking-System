@@ -4,7 +4,7 @@
 
 <script>
     import { navigate } from "svelte-navigator";
-    import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText, Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from "sveltestrap/src";
+    import { Navbar, NavbarBrand, Nav, NavItem, Modal, ModalHeader, ModalBody, ModalFooter, Button, Table } from "sveltestrap/src";
     import { login } from "./stores";
 
     const today = new Date();
