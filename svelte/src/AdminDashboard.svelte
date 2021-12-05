@@ -28,7 +28,7 @@ import { admin } from "./stores";
     </Navbar>
     <br>
     <TabContent pills>
-        <TabPane tabId="1" tab="Data" active><Data/></TabPane>
+        <TabPane tabId="1" tab="User Data" active><Data/></TabPane>
         <TabPane tabId="2" tab="Employees"><Employees/></TabPane>
         <TabPane tabId="3" tab="Spaces"><Spaces/></TabPane>
     </TabContent>

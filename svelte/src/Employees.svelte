@@ -55,10 +55,12 @@
 
 <main>
     <h6>Employees List</h6>
-    <Table>
+    <Table bordered>
         <thead>
             <th>#</th>
             <th>Name</th>
+            <th>Username</th>
+            <th>Remove</th>
         </thead>
         {#await promise}
         <p>PLEASE WAIT</p>
@@ -68,7 +70,8 @@
             <tr>
                 <td>{w.id}</td>
                 <td>{w.name}</td>
-                <td><button on:click={remove(w.id)}>Remove</button></td>
+                <td>{w.name}</td>
+                <td><div><Button color="danger" on:click={remove(w.id)}>Remove</Button></div></td>
             </tr>
             {/each} 
             

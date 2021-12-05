@@ -28,7 +28,7 @@
             
         {:then users}
 
-        <Table>
+        <Table bordered>
             <thead>
                 <th>Username</th>
                 <th>Name</th>
