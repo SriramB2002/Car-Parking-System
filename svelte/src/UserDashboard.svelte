@@ -133,14 +133,14 @@
                         <td>You quote it</td>
                         <td>Sedan</td>
                         <td class="rec">Recommended</td>
-                        <td><div><Button color="dark">Select Slot</Button></div></td>
+                        <td><div><Button on:click={openmodal} color="dark">Select Slot</Button></div></td>
                     </tr>
                     <tr>
                         <td>Slot 2</td>
                         <td>You quote it</td>
                         <td>SUV</td>
                         <td class="notrec">Not Recommended</td>
-                        <td><div><Button color="dark">Select Slot</Button></div></td>
+                        <td><div><Button on:click={openmodal} color="dark">Select Slot</Button></div></td>
                     </tr>
                 </Table>
             {/if}
