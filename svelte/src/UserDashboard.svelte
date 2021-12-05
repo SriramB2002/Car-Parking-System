@@ -152,6 +152,7 @@ import { get_slot_changes } from "svelte/internal";
                     <tr>
                         <th>Slot</th>
                         <th>Price</th>
+                        <th>Best Suited For</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -159,6 +160,7 @@ import { get_slot_changes } from "svelte/internal";
                     <tr>
                         <td>{"Slot " + slot.slot}</td>
                         <td>0</td>
+                        <td></td>
                         {#if slot.isRecommended}
                             <td class="rec">Recommended</td>
                         {:else}
