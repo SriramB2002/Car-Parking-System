@@ -77,7 +77,7 @@
             {/if}
             
             <p>(or)</p>
-            <div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn"></div>
+            <div class="g-signin2" data-theme="dark" data-longtitle="true" data-onsuccess="onSignIn"></div>
             <h3>Here for the first time?</h3> <button on:click={nav1}>Register</button>
         </div>
     </main>
