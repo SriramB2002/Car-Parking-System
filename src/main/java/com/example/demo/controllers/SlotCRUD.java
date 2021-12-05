@@ -172,9 +172,6 @@ public class SlotCRUD {
                 long given_in = booking.getTimestamp("check_in").getSeconds();
                 long given_out = booking.getTimestamp("check_out").getSeconds();
 
-                System.out.println(given_in);
-                System.out.println(given_out);
-
                 if(booking.get("slotID").equals(document.get("id"))) {
                     if(!((req_in < given_in && req_out < given_in) || (req_in > given_out && req_out > given_out))) {
                         free = false;

@@ -152,7 +152,7 @@
                     {#each slots as slot}
                     <tr>
                         <td>{"Slot " + slot.slot}</td>
-                        <td>You quote it</td>
+                        <td>{slot.isFree}</td>
                         <td>{slot.isRecommended}</td>
                         <td><div><Button on:click={openmodal(slots)} color="dark">Select Slot</Button></div></td>
                     </tr>
