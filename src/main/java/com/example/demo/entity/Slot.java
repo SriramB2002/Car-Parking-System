@@ -7,6 +7,15 @@ public class Slot {
     private static final AtomicInteger count = new AtomicInteger(0);
     private int id;
     private String location;
+    private String model;
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
 
     public Slot(String s) {
         id = count.incrementAndGet();

@@ -56,13 +56,32 @@
     }
 
     let bool = false;
-    const check = () => {
+    function check() {
         bool = true;
+        promise2 = search();
+    }
+
+    async function search() {
+        const res = await fetch("http://localhost:8080/searchSlots", {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({
+                checkIn: time_1,
+                checkOut: time_2,
+                date: date_str,
+                space: choice,
+                model: $login.car_model
+            })
+        })
+
+        const resp = await res.json();
+        return resp; 
     }
 
     let bool1 = false;
-    const openmodal = () => {
+    const openmodal = (x) => {
         bool1 = !bool1;
+        console.log(x);
     }
     let choice;
 
@@ -74,6 +93,7 @@
     }
 
     let promise = getSpaces();
+    let promise2;
 
     let drycleaning = false, carwashing = false, repair = false;
     let dryworker = "", washworker = "", repairworker = "";
@@ -119,31 +139,28 @@
             <button class="blue" type="submit">Find Slots</button>
         </form>
         {#if bool}
-            {#if choice == "Entrance Gate"}
+            {#await promise2}
+                    <p>Loading results...</p>
+                {:then slots} 
                 <Table bordered>
                     <tr>
                         <th>Slot</th>
                         <th>Price</th>
-                        <th>Car Type</th>
                         <th>Recommendation</th>
                         <th></th>
                     </tr>
+                    {#each slots as slot}
                     <tr>
-                        <td>Slot 1</td>
+                        <td>{"Slot " + slot.slot}</td>
                         <td>You quote it</td>
-                        <td>Sedan</td>
-                        <td class="rec">Recommended</td>
-                        <td><div><Button on:click={openmodal} color="dark">Select Slot</Button></div></td>
+                        <td>{slot.isRecommended}</td>
+                        <td><div><Button on:click={openmodal(slots)} color="dark">Select Slot</Button></div></td>
                     </tr>
-                    <tr>
-                        <td>Slot 2</td>
-                        <td>You quote it</td>
-                        <td>SUV</td>
-                        <td class="notrec">Not Recommended</td>
-                        <td><div><Button on:click={openmodal} color="dark">Select Slot</Button></div></td>
-                    </tr>
+                    {/each}
                 </Table>
-            {/if}
+
+            {/await}
+        
         {/if}
         <Modal isOpen={bool1}>
             <ModalHeader>Preferences</ModalHeader>
