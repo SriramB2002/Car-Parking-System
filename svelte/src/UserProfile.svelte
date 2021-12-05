@@ -4,8 +4,8 @@
 
 <script>
     import { navigate } from "svelte-navigator";
-    import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane } from "sveltestrap/src";
-import { login } from "./stores";
+    import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane, Table, Button } from "sveltestrap/src";
+    import { login } from "./stores";
 
     const signOut = () => {
         const auth2 = gapi.auth2.getAuthInstance();
@@ -31,40 +31,89 @@ import { login } from "./stores";
         bool = 1;
     }
 
+    let edit = false;
+    const editProfile = () => {
+        edit = true;
+    }
+
+    const updateProfile = () => {
+        edit = false;
+    }
     let amt = 0;
 </script>
 
 <main>
-    <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/UserDashboard">Car Parking System</NavbarBrand>
-        <Nav class="ms-auto" navbar>
-            <NavItem>
-                <button class="green" on:click={signOut}>Sign Out</button>
-            </NavItem>
-        </Nav>
-    </Navbar>
-    <br>
-    <TabContent vertical pills>
-        <TabPane tabId="1" tab="My Profile" active>
-            <ul class="list">
-                <li>Name: {$login.first_name + " " + $login.last_name}</li>
-                <li>Residential Address: {$login.address}</li>
-                <li>Email ID: {$login.email}</li>
-                <li>Mobile Number: {$login.mobile}</li>
-                <li>Car Model</li>
-                <li>Car Registration Number: {$login.car_reg}</li>
-            </ul>
-        </TabPane>
-        <TabPane tabId="2" tab="My Bookings"></TabPane>
-        <TabPane tabId="3" tab="My Finances">
-            <p>Balance in Account: </p>
-            <input type="number" bind:value={amt}>
-            <button on:click={check}>Add Money</button>
-            {#if bool}
-                <p class="green-text">Rs. {amt} added to account successfully!</p>
-            {/if}
-        </TabPane>
-    </TabContent>
+    {#if $login.first_name != ""}
+        <Navbar color="dark" dark expand="md">
+            <NavbarBrand href="/UserDashboard">Car Parking System</NavbarBrand>
+            <Nav class="ms-auto" navbar>
+                <NavItem>
+                    <button class="green" on:click={signOut}>Sign Out</button>
+                </NavItem>
+            </Nav>
+        </Navbar>
+        <br>
+        <TabContent vertical pills>
+            <TabPane tabId="1" tab="My Profile" active>
+                <Table bordered striped>
+                    <tr>
+                        <td>Name:</td>
+                        <td>{$login.first_name + " " + $login.last_name}</td>
+                    </tr>
+                    <tr>
+                        <td>Residential Address:</td>
+                        <td>{$login.address}</td>
+                    </tr>
+                    <tr>
+                        <td>Email ID:</td>
+                        <td>{$login.email}</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile Number:</td>
+                        <td>{$login.mobile}</td>
+                    </tr>
+                    <tr>
+                        <td>Car Model</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Car Registration Number:</td>
+                        <td>{$login.car_reg}</td>
+                    </tr>
+                </Table>
+                <Button color="info" on:click={editProfile}>Edit Details</Button>
+                {#if edit}
+                    <p></p>
+                    <p>First Name: <input type="text" bind:value={$login.first_name}></p>
+                    <p>Last Name: <input type="text" bind:value={$login.last_name}></p>
+                    <p>Residential Address: <input type="text" bind:value={$login.address}></p>
+                    <p>Email ID <input type="text" bind:value={$login.email}></p>
+                    <p>Mobile Number: <input type="text" bind:value={$login.mobile}></p>
+                    <p>Car Model: 
+                        <select>
+                            <option></option>
+                            <option>Sedan</option>
+                            <option>SUV</option>
+                            <option>Hatchback</option>
+                        </select>
+                    </p>
+                    <p>Car Registration Number: <input type="text" bind:value={$login.car_reg}></p>
+                    <Button color="success" on:click={updateProfile}>Update Profile</Button>
+                {/if}
+            </TabPane>
+            <TabPane tabId="2" tab="My Bookings"></TabPane>
+            <TabPane tabId="3" tab="My Finances">
+                <p>Balance in Account: </p>
+                <input type="number" bind:value={amt}>
+                <button on:click={check}>Add Money</button>
+                {#if bool}
+                    <p class="green-text">Rs. {amt} added to account successfully!</p>
+                {/if}
+            </TabPane>
+        </TabContent>
+    {:else}
+        <p>You are not logged in! Kindly <a href="/UserLogin">login</a></p>
+    {/if}
 </main>
 
 <style>
@@ -79,9 +128,5 @@ import { login } from "./stores";
 
     .green-text {
         color: green;
-    }
-
-    .list {
-        list-style-type: none;
     }
 </style>
