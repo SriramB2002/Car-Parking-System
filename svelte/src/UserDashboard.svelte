@@ -7,6 +7,30 @@
     import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText, Modal, ModalHeader, ModalBody, ModalFooter, Button } from "sveltestrap/src";
     import { login } from "./stores";
 
+    const today = new Date();
+
+	let date_str = [
+		today.getFullYear(),
+		pad(today.getMonth() + 1, 2),
+		pad(today.getDate(), 2)
+	].join('-');
+
+    let time_1 = [
+        today.getHours(),
+        today.getMinutes()
+    ].join(':');
+
+    let time_2 = [
+        today.getHours(),
+        today.getMinutes()
+    ].join(':');
+
+	function pad(x, len) {
+		x = String(x);
+		while (x.length < len) x = `0${x}`;
+		return x;
+	}
+
     const signOut = () => {
         const auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(() => {
@@ -20,7 +44,8 @@
                 address: "",
                 car_reg: "",
                 mobile: "",
-                email: ""
+                email: "",
+                car_model: ""
             });
             navigate("UserLogin");
         });
@@ -86,16 +111,36 @@
             
             <br><br>
             <h6>Date</h6>
-            <input type="date" required><br><br>
+            <input type="date" required bind:value={date_str}><br><br>
             <h6>Checkin</h6>
-            <input type="time" required><br><br>
+            <input type="time" required bind:value={time_1}><br><br>
             <h6>Checkout</h6>
-            <input type="time" required><br><br>
+            <input type="time" required bind:value={time_2}><br><br>
             <button class="blue" type="submit">Find Slots</button>
         </form>
         {#if bool}
             {#if choice == "Entrance Gate"}
                 <div class="flex">
+                    <Card class="col-lg-2" style="margin: 10px">
+                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                        <CardBody style="background-color: #99ff99">
+                            <CardText>
+                                <p>Price: </p>
+                                <p>Car Type: </p>
+                            </CardText>
+                            <button on:click={openmodal}>Select Slot</button>
+                        </CardBody>
+                    </Card>
+                    <Card class="col-lg-2" style="margin: 10px">
+                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                        <CardBody style="background-color: #99ff99">
+                            <CardText>
+                                <p>Price: </p>
+                                <p>Car Type: </p>
+                            </CardText>
+                            <button on:click={openmodal}>Select Slot</button>
+                        </CardBody>
+                    </Card>
                     <Card class="col-lg-2" style="margin: 10px">
                         <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
                         <CardBody style="background-color: #99ff99">
@@ -198,6 +243,13 @@
 </main>
 
 <style>
+    main {
+		text-align: center;
+		padding: 1em;
+        max-width: 1440px;
+		margin: 0 auto;
+	}
+
     h1 {
 		color: #ff3e00;
 		text-transform: uppercase;

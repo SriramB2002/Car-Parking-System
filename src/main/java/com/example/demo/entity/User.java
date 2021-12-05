@@ -14,9 +14,18 @@ public class User {
     private String address;
     private String car_reg;
     private String mobile;
+    private String car_model;
 
     public User() {
         id = count.incrementAndGet();
+    }
+
+    public String getCar_model() {
+        return car_model;
+    }
+
+    public void setCar_model(String car_model) {
+        this.car_model = car_model;
     }
 
     public int getId() {

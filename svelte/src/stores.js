@@ -9,7 +9,8 @@ export const login = writable({
     address: "",
     car_reg: "",
     mobile: "",
-    email: ""
+    email: "",
+    car_model: ""
 })
 
 export const worker = writable({

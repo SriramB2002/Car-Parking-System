@@ -39,12 +39,26 @@ import { Table, Button } from "sveltestrap";
         return resp;
     }
 
-    const gog = () => {
-        console.log("Hemlo saar");
+    async function gog(ID) {
+        const res = await fetch("http://localhost:8080/deleteSlot?id=" + ID, {
+            method: 'DELETE',
+            headers: {'content-type': 'application/json'}
+        })
+
+        refresh();
     }
 
     function refresh() {
         promise2 = getSlots();
+    }
+
+    async function removeSpace() {
+        const res = await fetch("http://localhost:8080/deleteSpace?space=" + choice, {
+            method: 'DELETE',
+            headers: {'content-type': 'application/json'}
+        })
+
+        refresh();
     }
 
 </script>
@@ -65,7 +79,7 @@ import { Table, Button } from "sveltestrap";
         {/await}
         <br><br>
     <button on:click={tog}>Add Parking Space</button>
-    <button disabled={choice == ""}>Delete Parking Space</button>
+    <button disabled={choice == ""} on:click={removeSpace}>Delete Parking Space</button>
     <br><br>
 
     {#if space_input}
@@ -90,7 +104,7 @@ import { Table, Button } from "sveltestrap";
             <tr>
                 <td>{"Slot " + s.id}</td>
                 <td>{s.location}</td>
-                <td><div><Button color="danger" on:click={gog}>Remove</Button></div></td>
+                <td><div><Button color="danger" on:click={gog(s.id)}>Remove</Button></div></td>
             </tr>
             {/each} 
             
