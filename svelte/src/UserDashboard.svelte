@@ -4,7 +4,7 @@
 
 <script>
     import { navigate } from "svelte-navigator";
-    import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText, Modal, ModalHeader, ModalBody } from "sveltestrap/src";
+    import { Navbar, NavbarBrand, Nav, NavItem, Card, CardHeader, CardBody, CardText, Modal, ModalHeader, ModalBody, ModalFooter, Button } from "sveltestrap/src";
     import { login } from "./stores";
 
     const signOut = () => {
@@ -49,113 +49,151 @@
     }
 
     let promise = getSpaces();
+
+    let drycleaning = false, carwashing = false, repair = false;
+    let dryworker = "", washworker = "", repairworker = "";
 </script>
 
 <main>
-    <Navbar color="dark" dark expand="md">
-        <NavbarBrand href="/UserDashboard">Car Parking System</NavbarBrand>
-        <Nav class="ms-auto" navbar>
-            <NavItem>
-                <button class="orange" on:click={nav}>View Profile</button>
-            </NavItem>
-            <NavItem>
-                <button class="green" on:click={signOut}>Sign Out</button>
-            </NavItem>
-        </Nav>
-    </Navbar>
-    <br>
-    <h3>Hello {$login.first_name} {$login.last_name}!</h3>
-    <h1>Book your slot here</h1>
-    <form on:submit|preventDefault={check}>
-        <h6>Location</h6>
-        {#await promise}
-            <p>Loading spaces...</p>
-        {:then spaces} 
-        <select bind:value={choice} required>
-            <option></option>
-            {#each spaces as elem}
-                <option>{elem}</option>
-            {/each}
-        </select>
+    {#if $login.first_name != ""}
+        <Navbar color="dark" dark expand="md">
+            <NavbarBrand href="/UserDashboard">Car Parking System</NavbarBrand>
+            <Nav class="ms-auto" navbar>
+                <NavItem>
+                    <button class="orange" on:click={nav}>View Profile</button>
+                </NavItem>
+                <NavItem>
+                    <button class="green" on:click={signOut}>Sign Out</button>
+                </NavItem>
+            </Nav>
+        </Navbar>
+        <br>
+        <h3>Hello {$login.first_name} {$login.last_name}!</h3>
+        <h1>Book your slot here</h1>
+        <form on:submit|preventDefault={check}>
+            <h6>Location</h6>
+            {#await promise}
+                <p>Loading spaces...</p>
+            {:then spaces} 
+            <select bind:value={choice} required>
+                <option></option>
+                {#each spaces as elem}
+                    <option>{elem}</option>
+                {/each}
+            </select>
+                
+            {/await}
             
-        {/await}
-        
-        <br><br>
-        <h6>Date</h6>
-        <input type="date" required><br><br>
-        <h6>Checkin</h6>
-        <input type="time" required><br><br>
-        <h6>Checkout</h6>
-        <input type="time" required><br><br>
-        <button class="blue" type="submit">Find Slots</button>
-    </form>
-    {#if bool}
-        {#if choice == "Entrance Gate"}
-            <div class="flex">
-                <Card class="col-lg-2" style="margin: 10px">
-                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                    <CardBody style="background-color: #99ff99">
-                        <CardText>
-                            <p>Price: </p>
-                            <p>Car Type: </p>
-                        </CardText>
-                        <button on:click={openmodal}>Select Slot</button>
-                    </CardBody>
-                </Card>
-                <Card class="col-lg-2" style="margin: 10px">
-                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                    <CardBody style="background-color: #99ff99">
-                        <CardText>
-                            <p>Price: </p>
-                            <p>Car Type: </p>
-                        </CardText>
-                        <button on:click={openmodal}>Select Slot</button>
-                    </CardBody>
-                </Card>
-                <Card class="col-lg-2" style="margin: 10px">
-                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                    <CardBody style="background-color: #99ff99">
-                        <CardText>
-                            <p>Price: </p>
-                            <p>Car Type: </p>
-                        </CardText>
-                        <button on:click={openmodal}>Select Slot</button>
-                    </CardBody>
-                </Card>
-                <Card class="col-lg-2" style="margin: 10px">
-                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                    <CardBody style="background-color: #99ff99">
-                        <CardText>
-                            <p>Price: </p>
-                            <p>Car Type: </p>
-                        </CardText>
-                        <button on:click={openmodal}>Select Slot</button>
-                    </CardBody>
-                </Card>
-                <Card class="col-lg-2" style="margin: 10px">
-                    <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
-                    <CardBody style="background-color: #99ff99">
-                        <CardText>
-                            <p>Price: </p>
-                            <p>Car Type: </p>
-                        </CardText>
-                        <button on:click={openmodal}>Select Slot</button>
-                    </CardBody>
-                </Card>
-            </div>
+            <br><br>
+            <h6>Date</h6>
+            <input type="date" required><br><br>
+            <h6>Checkin</h6>
+            <input type="time" required><br><br>
+            <h6>Checkout</h6>
+            <input type="time" required><br><br>
+            <button class="blue" type="submit">Find Slots</button>
+        </form>
+        {#if bool}
+            {#if choice == "Entrance Gate"}
+                <div class="flex">
+                    <Card class="col-lg-2" style="margin: 10px">
+                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                        <CardBody style="background-color: #99ff99">
+                            <CardText>
+                                <p>Price: </p>
+                                <p>Car Type: </p>
+                            </CardText>
+                            <button on:click={openmodal}>Select Slot</button>
+                        </CardBody>
+                    </Card>
+                    <Card class="col-lg-2" style="margin: 10px">
+                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                        <CardBody style="background-color: #99ff99">
+                            <CardText>
+                                <p>Price: </p>
+                                <p>Car Type: </p>
+                            </CardText>
+                            <button on:click={openmodal}>Select Slot</button>
+                        </CardBody>
+                    </Card>
+                    <Card class="col-lg-2" style="margin: 10px">
+                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                        <CardBody style="background-color: #99ff99">
+                            <CardText>
+                                <p>Price: </p>
+                                <p>Car Type: </p>
+                            </CardText>
+                            <button on:click={openmodal}>Select Slot</button>
+                        </CardBody>
+                    </Card>
+                    <Card class="col-lg-2" style="margin: 10px">
+                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                        <CardBody style="background-color: #99ff99">
+                            <CardText>
+                                <p>Price: </p>
+                                <p>Car Type: </p>
+                            </CardText>
+                            <button on:click={openmodal}>Select Slot</button>
+                        </CardBody>
+                    </Card>
+                    <Card class="col-lg-2" style="margin: 10px">
+                        <CardHeader style="background-color: limegreen">Slot 1</CardHeader>
+                        <CardBody style="background-color: #99ff99">
+                            <CardText>
+                                <p>Price: </p>
+                                <p>Car Type: </p>
+                            </CardText>
+                            <button on:click={openmodal}>Select Slot</button>
+                        </CardBody>
+                    </Card>
+                </div>
+            {/if}
         {/if}
-    {/if}
-    {#if bool1}
         <Modal isOpen={bool1}>
             <ModalHeader>Preferences</ModalHeader>
             <ModalBody>
                 <p>Services: 
-                    <label><input type="checkbox">Dry Cleaning</label>
-                    <label><input type="checkbox">Car Washing</label>
-                    <label><input type="checkbox">Repair & Maintenance</label>
+                    <label><input type="checkbox" bind:checked={drycleaning}>Dry Cleaning</label>
+                    <label><input type="checkbox" bind:checked={carwashing}>Car Washing</label>
+                    <label><input type="checkbox" bind:checked={repair}>Repair & Maintenance</label>
                 </p>
+                {#if drycleaning}
+                    <p>Dry Cleaning Worker: 
+                        <select bind:value={dryworker}>
+                            <option></option>
+                            <option>Ramesh</option>
+                            <option>Suresh</option>
+                        </select>
+                    </p>
+                {/if}
+                {#if carwashing}
+                    <p>Car Washing Worker: 
+                        <select bind:value={washworker}>
+                            <option></option>
+                            <option>Ramesh</option>
+                            <option>Suresh</option>
+                        </select>
+                    </p>
+                {/if}
+                {#if repair}
+                    <p>Repair & Maintenance Worker: 
+                        <select bind:value={repairworker}>
+                            <option></option>
+                            <option>Ramesh</option>
+                            <option>Suresh</option>
+                        </select>
+                    </p>
+                {/if}
             </ModalBody>
+            <ModalFooter>
+                {#if ((drycleaning && dryworker != "")|| (carwashing && washworker != "") || (repair && repairworker != ""))}
+                    <Button color="success">Make Payment</Button>
+                {/if}
+                <Button color="danger" on:click={openmodal}>Close</Button>
+            </ModalFooter>
         </Modal>
+    {:else}
+        <p>You are not logged in! Kindly <a href="/UserLogin">login</a></p>
     {/if}
 </main>
 
