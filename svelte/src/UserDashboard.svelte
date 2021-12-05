@@ -150,12 +150,9 @@
             <ModalHeader>Preferences</ModalHeader>
             <ModalBody>
                 <p>Services: 
-                    <select>
-                        <option></option>
-                        <option>Dry Cleaning</option>
-                        <option>Car Washing</option>
-                        <option>Repair & Maintenance</option>
-                    </select>
+                    <label><input type="checkbox">Dry Cleaning</label>
+                    <label><input type="checkbox">Car Washing</label>
+                    <label><input type="checkbox">Repair & Maintenance</label>
                 </p>
             </ModalBody>
         </Modal>

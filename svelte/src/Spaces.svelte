@@ -1,5 +1,5 @@
 <script>
-import { Table } from "sveltestrap";
+import { Table, Button } from "sveltestrap";
 
     let space_input = 0;
     let space = "";
@@ -39,6 +39,10 @@ import { Table } from "sveltestrap";
         return resp;
     }
 
+    const gog = () => {
+        console.log("Hemlo saar");
+    }
+
     function refresh() {
         promise2 = getSlots();
     }
@@ -61,7 +65,7 @@ import { Table } from "sveltestrap";
         {/await}
         <br><br>
     <button on:click={tog}>Add Parking Space</button>
-    <button>Delete Parking Space</button>
+    <button disabled={choice == ""}>Delete Parking Space</button>
     <br><br>
 
     {#if space_input}
@@ -72,10 +76,11 @@ import { Table } from "sveltestrap";
         </form>
     {/if}
 
-    <Table bordered style="margin-left: 125px;">
+    <Table bordered>
         <thead>
             <th>Slot</th>
             <th>Space</th>
+            <th>Remove</th>
         </thead>
         {#await promise2}
         <p>PLEASE WAIT</p>
@@ -85,6 +90,7 @@ import { Table } from "sveltestrap";
             <tr>
                 <td>{"Slot " + s.id}</td>
                 <td>{s.location}</td>
+                <td><div><Button color="danger" on:click={gog}>Remove</Button></div></td>
             </tr>
             {/each} 
             
