@@ -65,7 +65,6 @@
         <input type="text" placeholder="Car Registration Number" required bind:value={c}><br>
         <button type="submit">Register</button>
         <button>Verify Email ID</button>
-        <button>Verify Mobile Number</button>
     </form>
 </main>
 
