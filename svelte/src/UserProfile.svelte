@@ -31,6 +31,7 @@ import Spaces from "./Spaces.svelte";
     let bool = 0;
     const check = async () => {
         bool = 1;
+        $login.balance += add;
         updateProfile();
     }
 
@@ -55,6 +56,11 @@ import Spaces from "./Spaces.svelte";
     }
 
     let promise = getBookings();
+    let add = 0;
+    const ok = () => {
+        bool = 0;
+        add = 0;
+    }
 </script>
 
 <main>
@@ -153,11 +159,11 @@ import Spaces from "./Spaces.svelte";
                 </Table>
             </TabPane>
             <TabPane tabId="3" tab="My Finances">
-                <p>Balance in Account: </p>
-                <input type="number" bind:value={$login.balance}>
+                <p>Balance in Account: {$login.balance}</p>
+                <input type="number" bind:value={add}>
                 <button on:click={check}>Add Money</button>
                 {#if bool}
-                    <p class="green-text">New balance is now {$login.balance}</p>
+                    <p class="green-text">Rs. {add} added to account. <button on:click={ok}>OK</button></p>
                 {/if}
             </TabPane>
         </TabContent>
