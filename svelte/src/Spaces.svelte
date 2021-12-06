@@ -61,6 +61,14 @@ import { Table, Button } from "sveltestrap";
         refresh();
     }
 
+    async function update(slot) {
+        const res = await fetch("http://localhost:8080/updateSlot", {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(slot)
+        });
+    }
+
 </script>
 
 
@@ -94,6 +102,7 @@ import { Table, Button } from "sveltestrap";
         <thead>
             <th>Slot</th>
             <th>Space</th>
+            <th>Model</th>
             <th>Remove</th>
         </thead>
         {#await promise2}
@@ -104,6 +113,13 @@ import { Table, Button } from "sveltestrap";
             <tr>
                 <td>{"Slot " + s.id}</td>
                 <td>{s.location}</td>
+                <td>
+                    <select bind:value={s.model} on:change={update(s)}>
+                        <option>Sedan</option>
+                        <option>SUV</option>
+                        <option>Hutchback</option>
+                    </select>
+                </td>
                 <td><div><Button color="danger" on:click={gog(s.id)}>Remove</Button></div></td>
             </tr>
             {/each} 

@@ -11,10 +11,12 @@ import java.util.List;
 import com.example.demo.entity.Query;
 import com.example.demo.entity.Slot;
 import com.example.demo.entity.SlotWithStatus;
+import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 
 import org.springframework.beans.propertyeditors.ZoneIdEditor;
@@ -167,10 +169,8 @@ public class SlotCRUD {
                 long req_in = date1.toEpochSecond(OffsetDateTime.now().getOffset()) * 1000;
                 long req_out = date2.toEpochSecond(OffsetDateTime.now().getOffset()) * 1000;
 
-                
-
-                long given_in = booking.getTimestamp("check_in").getSeconds() * 1000;
-                long given_out = booking.getTimestamp("check_out").getSeconds() * 1000;
+                long given_in = booking.getLong("checkIn");
+                long given_out = booking.getLong("checkOut");
 
                 if(booking.get("slotID").equals(document.get("id"))) {
                     if(!((req_in < given_in && req_out < given_in) || (req_in > given_out && req_out > given_out))) {
@@ -190,6 +190,18 @@ public class SlotCRUD {
         }
 
         return list;
+    }
+
+    @CrossOrigin(origins = "http://localhost:5000")
+    @PostMapping("/updateSlot")
+    public String update(@RequestBody Slot slot) throws Exception {
+        Firestore database = FirestoreClient.getFirestore();
+        DocumentReference docRef = database.collection("slots").document(String.valueOf(slot.getId()));
+        // ...
+        // future.get() blocks on response
+        ApiFuture<WriteResult> future = docRef.update("model", slot.getModel());
+
+        return future.get().toString();
     }
 
     

@@ -19,6 +19,7 @@
     "svelte": "^3.0.0"
   },
   "dependencies": {
+    "firebase": "^9.6.0",
     "rollup-plugin-dev": "^2.0.1",
     "sirv-cli": "^1.0.0",
     "svelte-navigator": "^3.1.5",

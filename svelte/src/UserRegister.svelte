@@ -9,7 +9,6 @@
     let e = "";
     let m = "";
     let c = "";
-    let t = "";
     let ver = false;
 
     async function register() {
@@ -27,14 +26,12 @@
                 "address": a,
                 "email": e,
                 "mobile": m,
-                "car_model": t,
                 "car_reg": c,
                     
             })
         })
         const resp = await res.text();
         console.log(resp);
-        alert("Registered Successfully!");
         }
         else alert("Password and Confirm Password don't match");
     }
@@ -64,13 +61,6 @@
         <input type="email" placeholder="Email ID" required bind:value={e}>
         <label for="mobile">Mobile Number:</label>
         <input type="tel" placeholder="Mobile Number" required bind:value={m}>
-        <label for="car-type">Car Type</label>
-        <select bind:value={t}>
-            <option></option>
-            <option>Sedan</option>
-            <option>SUV</option>
-            <option>Hutchback</option>
-        </select>
         <label for="car-reg-no">Car Registration Number:</label>
         <input type="text" placeholder="Car Registration Number" required bind:value={c}><br>
         <button type="submit">Register</button>

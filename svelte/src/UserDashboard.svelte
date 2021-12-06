@@ -76,13 +76,15 @@ import { get_slot_changes } from "svelte/internal";
         })
 
         const resp = await res.json();
+        console.log(resp);
         return resp; 
     }
 
     let bool1 = false;
+    let s;
     const openmodal = (x) => {
         bool1 = !bool1;
-        console.log(x);
+        s = x;
     }
     let choice;
 
@@ -102,7 +104,75 @@ import { get_slot_changes } from "svelte/internal";
     let promise2;
 
     let drycleaning = false, carwashing = false, repair = false;
-    let dryworker = "", washworker = "", repairworker = "";
+    let dryworker = -1, washworker = -1, repairworker = -1;
+
+    let serv1 = getDry();
+    let serv2 = getWashing();
+    let serv3 = getRepair();
+
+    async function getDry() {
+        try {
+            const res = await fetch("http://localhost:8080/getworkers?service=Dry%20Cleaning");
+            const resp = await res.json();
+            console.log(resp);
+            return resp;
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+
+    async function getWashing() {
+        try {
+            const res = await fetch("http://localhost:8080/getworkers?service=Car%20Washing");
+            const resp = await res.json();
+            console.log(resp);
+            return resp;
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+
+    async function getRepair() {
+        try {
+            const res = await fetch("http://localhost:8080/getworkers?service=Repair%20Work");
+            const resp = await res.json();
+            console.log(resp);
+            return resp;
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+
+    async function book() {
+        const x1 = (new Date(date_str + " " + time_1 + " GMT+0530")).getTime();
+        const x2 = (new Date(date_str + " " + time_2 + " GMT+0530")).getTime();
+
+        const res = await fetch("http://localhost:8080/book", {
+            method: 'POST',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify({
+                bookingID: "",
+                checkIn: x1,
+                checkOut: x2,
+                cleaningWorker: dryworker,
+                washingWorker: washworker,
+                repairworker: repairworker,
+                slotID: s,
+                userID: $login.id
+            })
+        })
+
+        drycleaning = false, carwashing = false, repair = false;
+        dryworker = -1, washworker = -1, repairworker = -1;
+        s = -1;
+        bool1 = !bool1;
+        alert("BOOKING DONE");
+    }
+
+
 </script>
 
 <main>
@@ -152,7 +222,6 @@ import { get_slot_changes } from "svelte/internal";
                     <tr>
                         <th>Slot</th>
                         <th>Price</th>
-                        <th>Best Suited For</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -160,14 +229,13 @@ import { get_slot_changes } from "svelte/internal";
                     <tr>
                         <td>{"Slot " + slot.slot}</td>
                         <td>0</td>
-                        <td></td>
                         {#if slot.isRecommended}
                             <td class="rec">Recommended</td>
                         {:else}
                             <td class="notrec">Not Recommended</td>
                         {/if}
                         {#if slot.isFree}
-                            <td><div><Button on:click={openmodal(slots)} color="dark">Select Slot</Button></div></td>
+                            <td><div><Button on:click={openmodal(slot.slot)} color="dark">Select Slot</Button></div></td>
                         {:else}
                             <td><div><Button disabled color="dark">Available at {format(slot.freeTime)}</Button></div></td>
                         {/if}
@@ -188,35 +256,54 @@ import { get_slot_changes } from "svelte/internal";
                 </p>
                 {#if drycleaning}
                     <p>Dry Cleaning Worker: 
+                        {#await serv1}
+                            <p>Please wait...</p>
+                        {:then workers} 
                         <select bind:value={dryworker}>
                             <option></option>
-                            <option>Ramesh</option>
-                            <option>Suresh</option>
+                            {#each workers as worker}
+                                <option value = {worker.id}>{worker.name}</option>
+                            {/each}
+                            
                         </select>
+                        {/await}
+                        
                     </p>
                 {/if}
                 {#if carwashing}
                     <p>Car Washing Worker: 
+                        {#await serv2}
+                            <p>Please wait...</p>
+                        {:then workers} 
                         <select bind:value={washworker}>
                             <option></option>
-                            <option>Ramesh</option>
-                            <option>Suresh</option>
+                            {#each workers as worker}
+                                <option value = {worker.id}>{worker.name}</option>
+                            {/each}
+                            
                         </select>
+                        {/await}
                     </p>
                 {/if}
                 {#if repair}
                     <p>Repair & Maintenance Worker: 
+                        {#await serv3}
+                            <p>Please wait...</p>
+                        {:then workers} 
                         <select bind:value={repairworker}>
                             <option></option>
-                            <option>Ramesh</option>
-                            <option>Suresh</option>
+                            {#each workers as worker}
+                                <option value = {worker.id}>{worker.name}</option>
+                            {/each}
+                            
                         </select>
+                        {/await}
                     </p>
                 {/if}
             </ModalBody>
             <ModalFooter>
-                {#if ((drycleaning || carwashing || repair) && (!drycleaning || dryworker != "") && (!carwashing || washworker != "") && (!repair || repairworker != ""))}
-                    <Button color="success">Make Payment</Button>
+                {#if ((drycleaning || carwashing || repair) && (!drycleaning || dryworker != -1) && (!carwashing || washworker != -1) && (!repair || repairworker != -1))}
+                    <Button color="success" on:click={book}>Make Payment</Button>
                 {/if}
                 <Button color="danger" on:click={openmodal}>Close</Button>
             </ModalFooter>

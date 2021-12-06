@@ -44,12 +44,21 @@ public class WorkerCRUD {
 
     @CrossOrigin(origins = "http://localhost:5000")
     @GetMapping("/getworkers")
-    public @ResponseBody List<Worker> getAll() throws Exception{
+    public @ResponseBody List<Worker> getWorker(@RequestParam(name = "service", required = false) String service) throws Exception{
 
         List<Worker> getList = new ArrayList<Worker>();
         Firestore database = FirestoreClient.getFirestore();
+        List<QueryDocumentSnapshot> workers;
 
-        List<QueryDocumentSnapshot> workers = database.collection("workers").get().get().getDocuments();
+        if(service == null) {
+            workers = database.collection("workers").get().get().getDocuments();
+            
+        }
+
+        else {
+            workers = database.collection("workers").whereEqualTo("service", service).get().get().getDocuments();
+        }
+
         for (QueryDocumentSnapshot document : workers) {
             getList.add(document.toObject(Worker.class));
         }

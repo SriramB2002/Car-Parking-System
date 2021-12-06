@@ -4,7 +4,9 @@ public class Booking {
     private String bookingID;
     private long checkIn;
     private long checkOut;
-    private int workerID;
+    private int cleaningWorker;
+    private int repairWorker;
+    private int washingWorker;
     private int slotID;
     private int userID;
 
@@ -27,10 +29,6 @@ public class Booking {
     public int getUserID() {
         return userID;
     }
-    
-    public int getWorkerID() {
-        return workerID;
-    }
 
     public void setBookingID(String bookingID) {
         this.bookingID = bookingID;
@@ -52,8 +50,27 @@ public class Booking {
         this.userID = userID;
     }
 
-    public void setWorkerID(int workerID) {
-        this.workerID = workerID;
+    public int getCleaningWorker() {
+        return cleaningWorker;
     }
 
+    public int getRepairWorker() {
+        return repairWorker;
+    }
+
+    public int getWashingWorker() {
+        return washingWorker;
+    }
+
+    public void setCleaningWorker(int cleaningWorker) {
+        this.cleaningWorker = cleaningWorker;
+    }
+    
+    public void setRepairWorker(int repairWorker) {
+        this.repairWorker = repairWorker;
+    }
+
+    public void setWashingWorker(int washingWorker) {
+        this.washingWorker = washingWorker;
+    }
 }
