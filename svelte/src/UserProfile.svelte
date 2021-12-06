@@ -157,9 +157,24 @@ import Spaces from "./Spaces.svelte";
                             <td>{new Date(book.checkIn)}</td>
                             <td>{new Date(book.checkOut)}</td>
                             <td>{book.slotID}</td>
-                            <td>{book.cleaningWorker}</td>
-                            <td>{book.repairWorker}</td>
-                            <td>{book.washingWorker}</td>
+                            {#if book.cleaningWorker != -1}
+                                <td>{book.cleaningWorker}</td>
+                            {:else}
+                                <td>NA</td>
+                            {/if}
+                            {#if book.repairWorker != -1}
+                                <td>{book.repairWorker}</td>
+                            {:else}
+                                <td>NA</td>
+                            {/if}
+                            {#if book.washingWorker != -1}
+                                <td>{book.washingWorker}</td>
+                            {:else}
+                                <td>NA</td>
+                            {/if}
+                            <!-- <td>{book.cleaningWorker}</td> -->
+                            <!-- <td>{book.repairWorker}</td> -->
+                            <!-- <td>{book.washingWorker}</td> -->
                             <td>
                                 <div>
                                     <Button color="primary">Modify</Button>
