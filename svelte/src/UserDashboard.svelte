@@ -10,6 +10,8 @@ import { get_slot_changes } from "svelte/internal";
 
     const today = new Date();
 
+    let price = 0.0;
+
 	let date_str = [
 		today.getFullYear(),
 		pad(today.getMonth() + 1, 2),
@@ -61,6 +63,26 @@ import { get_slot_changes } from "svelte/internal";
     function check() {
         bool = true;
         promise2 = search();
+        price = 0.0;
+        let hour1 = "", hour2 = "", minute1 = "", minute2 = "";
+        hour1 += time_1.charAt(0) + time_1.charAt(1);
+        minute1 += time_1.charAt(3) + time_1.charAt(4);
+        hour2 += time_2.charAt(0) + time_2.charAt(1);
+        minute2 += time_2.charAt(3) + time_2.charAt(4);
+
+        let h1=parseInt(hour1);
+        let m1=parseInt(minute1);
+        let h2=parseInt(hour2);
+        let m2=parseInt(minute2);
+        console.log(h1);
+        console.log(m1);
+        console.log(h2);
+        console.log(m2);
+
+        let temp_price = (h2*60 + m2) - (h1*60 + m1);
+        temp_price *= 25.0/60;
+        price += temp_price;
+        console.log(price);
     }
 
     async function search() {
@@ -192,8 +214,6 @@ import { get_slot_changes } from "svelte/internal";
             body: JSON.stringify($login)
          });
     }
-
-
 </script>
 
 <main>
@@ -249,7 +269,7 @@ import { get_slot_changes } from "svelte/internal";
                     {#each slots as slot}
                     <tr>
                         <td>{"Slot " + slot.slot}</td>
-                        <td>0</td>
+                        <td>{price}</td>
                         {#if slot.isRecommended}
                             <td class="rec">Recommended</td>
                         {:else}
