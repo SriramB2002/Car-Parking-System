@@ -15,6 +15,15 @@ public class User {
     private String car_reg;
     private String mobile;
     private String car_model;
+    private int balance;
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
 
     public User() {
         id = count.incrementAndGet();

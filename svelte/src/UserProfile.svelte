@@ -5,6 +5,7 @@
 <script>
     import { navigate } from "svelte-navigator";
     import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane, Table, Button } from "sveltestrap/src";
+import Spaces from "./Spaces.svelte";
     import { login } from "./stores";
 
     const signOut = () => {
@@ -46,7 +47,14 @@
             body: JSON.stringify($login)
          });
     }
-    let amt = 0;
+
+    async function getBookings() {
+        const res = await fetch("http://localhost:8080/getBookings?id=" + $login.id);
+        const resp = await res.json();
+        return resp;
+    }
+
+    let promise = getBookings();
 </script>
 
 <main>
@@ -115,22 +123,33 @@
                         <th>Checkin</th>
                         <th>Checkout</th>
                         <th>Slot</th>
-                        <th>Worker</th>
+                        <th>Cleaning Worker</th>
+                        <th>Repair Worker</th>
+                        <th>Washing Worker</th>
                         <th></th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Something</td>
-                        <td>Something</td>
-                        <td>1</td>
-                        <td>Ramesh</td>
-                        <td>
-                            <div>
-                                <Button color="primary">Modify</Button>
-                                <Button color="danger">Remove</Button>
-                            </div>
-                        </td>
-                    </tr>
+                        {#await promise}
+                            <p>Waiting...</p>
+                        {:then bookings}
+                        {#each bookings as book}
+                        <tr>
+                            <td>{book.bookingID}</td>
+                            <td>{new Date(book.checkIn)}</td>
+                            <td>{new Date(book.checkOut)}</td>
+                            <td>{book.slotID}</td>
+                            <td>{book.cleaningWorker}</td>
+                            <td>{book.repairWorker}</td>
+                            <td>{book.washingWorker}</td>
+                            <td>
+                                <div>
+                                    <Button color="primary">Modify</Button>
+                                    <Button color="danger">Remove</Button>
+                                </div>
+                            </td>
+                        </tr>
+                        {/each} 
+                            
+                        {/await}
                 </Table>
             </TabPane>
             <TabPane tabId="3" tab="My Finances">

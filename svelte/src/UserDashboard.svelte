@@ -46,7 +46,8 @@ import { get_slot_changes } from "svelte/internal";
                 car_reg: "",
                 mobile: "",
                 email: "",
-                car_model: ""
+                car_model: "",
+                balance: 0
             });
             navigate("UserLogin");
         });
@@ -150,26 +151,46 @@ import { get_slot_changes } from "svelte/internal";
         const x1 = (new Date(date_str + " " + time_1 + " GMT+0530")).getTime();
         const x2 = (new Date(date_str + " " + time_2 + " GMT+0530")).getTime();
 
-        const res = await fetch("http://localhost:8080/book", {
+        if($login.balance < 100) {
+            alert("Insufficient balance to make booking");
+        }
+
+        else {
+            $login.balance -= 100;
+            const res = await fetch("http://localhost:8080/book", {
+                method: 'POST',
+                headers: {'content-type': 'application/json'},
+                body: JSON.stringify({
+                    bookingID: "",
+                    checkIn: x1,
+                    checkOut: x2,
+                    cleaningWorker: dryworker,
+                    washingWorker: washworker,
+                    repairworker: repairworker,
+                    slotID: s,
+                    userID: $login.id
+                })
+            })
+
+            drycleaning = false, carwashing = false, repair = false;
+            dryworker = -1, washworker = -1, repairworker = -1;
+            s = -1;
+            bool1 = !bool1;
+
+            alert("BOOKING DONE");
+            updateProfile();
+        }
+        
+
+        
+    }
+
+    async function updateProfile(){
+        const res = await fetch("http://localhost:8080/updateUser", {
             method: 'POST',
             headers: {'content-type': 'application/json'},
-            body: JSON.stringify({
-                bookingID: "",
-                checkIn: x1,
-                checkOut: x2,
-                cleaningWorker: dryworker,
-                washingWorker: washworker,
-                repairworker: repairworker,
-                slotID: s,
-                userID: $login.id
-            })
-        })
-
-        drycleaning = false, carwashing = false, repair = false;
-        dryworker = -1, washworker = -1, repairworker = -1;
-        s = -1;
-        bool1 = !bool1;
-        alert("BOOKING DONE");
+            body: JSON.stringify($login)
+         });
     }
 
 
