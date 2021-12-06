@@ -30,6 +30,8 @@ public class BookingCRUD {
         Firestore database = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> result = database.collection("bookings").document().set(booking);
 
+        result.get().getUpdateTime();
+        
         DocumentReference ref = database.collection("bookings")
         .whereEqualTo("bookingID", "")
         .get().get().getDocuments()

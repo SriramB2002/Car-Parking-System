@@ -61,6 +61,20 @@ import Spaces from "./Spaces.svelte";
         bool = 0;
         add = 0;
     }
+
+    function refresh() {
+        promise = getBookings();
+    }
+
+    async function remove(booking) {
+        const res = await fetch("http://localhost:8080/deleteBooking?id=" + booking.bookingID, {
+            method: 'DELETE',
+            headers: {'content-type': 'application/json'}
+         });
+
+         refresh();
+    }
+
 </script>
 
 <main>
@@ -149,7 +163,7 @@ import Spaces from "./Spaces.svelte";
                             <td>
                                 <div>
                                     <Button color="primary">Modify</Button>
-                                    <Button color="danger">Remove</Button>
+                                    <Button color="danger" on:click={remove(book)}>Remove</Button>
                                 </div>
                             </td>
                         </tr>
