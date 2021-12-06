@@ -28,8 +28,9 @@
     }
 
     let bool = 0;
-    const check = () => {
+    const check = async () => {
         bool = 1;
+        updateProfile();
     }
 
     let edit = false;
@@ -110,33 +111,34 @@
             <TabPane tabId="2" tab="My Bookings">
                 <Table bordered>
                     <tr>
-                        <td>Booking ID:</td>
-                        <td></td>
+                        <th>Booking ID</th>
+                        <th>Checkin</th>
+                        <th>Checkout</th>
+                        <th>Slot</th>
+                        <th>Worker</th>
+                        <th></th>
                     </tr>
                     <tr>
-                        <td>Checkin:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Checkout:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Slot:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Worker:</td>
-                        <td></td>
+                        <td>1</td>
+                        <td>Something</td>
+                        <td>Something</td>
+                        <td>1</td>
+                        <td>Ramesh</td>
+                        <td>
+                            <div>
+                                <Button color="primary">Modify</Button>
+                                <Button color="danger">Remove</Button>
+                            </div>
+                        </td>
                     </tr>
                 </Table>
             </TabPane>
             <TabPane tabId="3" tab="My Finances">
                 <p>Balance in Account: </p>
-                <input type="number" bind:value={amt}>
+                <input type="number" bind:value={$login.balance}>
                 <button on:click={check}>Add Money</button>
                 {#if bool}
-                    <p class="green-text">Rs. {amt} added to account successfully!</p>
+                    <p class="green-text">New balance is now {$login.balance}</p>
                 {/if}
             </TabPane>
         </TabContent>
