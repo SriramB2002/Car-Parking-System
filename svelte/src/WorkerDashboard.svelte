@@ -42,6 +42,7 @@ import { navigate } from "svelte-navigator";
         });
 
         const resp = await res.text();
+        alert("Updated Successfully!");
     }
 </script> 
 
