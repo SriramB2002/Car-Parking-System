@@ -49,7 +49,7 @@
 </script>
 
 <main>
-    {#if $login.first_name != ""}
+    {#if $login.id != -1}
         <Navbar color="dark" dark expand="md">
             <NavbarBrand href="/UserDashboard">Car Parking System</NavbarBrand>
             <Nav class="ms-auto" navbar>
@@ -107,7 +107,30 @@
                     <Button color="success" on:click={updateProfile}>Update Profile</Button>
                 {/if}
             </TabPane>
-            <TabPane tabId="2" tab="My Bookings"></TabPane>
+            <TabPane tabId="2" tab="My Bookings">
+                <Table bordered>
+                    <tr>
+                        <td>Booking ID:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Checkin:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Checkout:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Slot:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Worker:</td>
+                        <td></td>
+                    </tr>
+                </Table>
+            </TabPane>
             <TabPane tabId="3" tab="My Finances">
                 <p>Balance in Account: </p>
                 <input type="number" bind:value={amt}>
