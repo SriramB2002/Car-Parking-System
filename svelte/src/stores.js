@@ -23,3 +23,5 @@ export const worker = writable({
     slotID: -1
 })
 export const admin = writable(0)
+
+export const m = writable("")
