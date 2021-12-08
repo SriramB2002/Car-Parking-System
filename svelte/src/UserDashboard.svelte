@@ -239,6 +239,8 @@ import { get_slot_changes } from "svelte/internal";
             headers: {'content-type': 'application/json'},
             body: JSON.stringify($login)
          });
+
+         const resp = await res.text();
     }
 </script>
 
@@ -308,10 +310,12 @@ import { get_slot_changes } from "svelte/internal";
                         {:else}
                             <td class="notrec">Not Recommended</td>
                         {/if}
-                        {#if slot.isFree}
+                        {#if slot.isFree && slot.isRecommended}
                             <td><div><Button on:click={openmodal(slot.slot)} color="dark">Select Slot</Button></div></td>
-                        {:else}
+                        {:else if !slot.isFree}
                             <td><div><Button disabled color="dark">Available at {format(slot.freeTime)}</Button></div></td>
+                        {:else if !slot.isRecommended}
+                            <td><div><Button disabled color="dark">Not Recommended</Button></div></td>
                         {/if}
                     </tr>
                     {/each}
@@ -334,9 +338,9 @@ import { get_slot_changes } from "svelte/internal";
                             <p>Please wait...</p>
                         {:then workers} 
                         <select bind:value={dryworker}>
-                            <option></option>
+                            <option value= -1></option>
                             {#each workers as worker}
-                                <option value = {worker.id}>{worker.name}</option>
+                                <option value = {worker.id}>{worker.name + " - " + worker.rating}</option>
                             {/each}
                             
                         </select>
@@ -350,9 +354,9 @@ import { get_slot_changes } from "svelte/internal";
                             <p>Please wait...</p>
                         {:then workers} 
                         <select bind:value={washworker}>
-                            <option></option>
+                            <option value = -1></option>
                             {#each workers as worker}
-                                <option value = {worker.id}>{worker.name}</option>
+                                <option value = {worker.id}>{worker.name + " - " + worker.rating}</option>
                             {/each}
                             
                         </select>
@@ -365,9 +369,9 @@ import { get_slot_changes } from "svelte/internal";
                             <p>Please wait...</p>
                         {:then workers} 
                         <select bind:value={repairworker}>
-                            <option></option>
+                            <option value = -1></option>
                             {#each workers as worker}
-                                <option value = {worker.id}>{worker.name}</option>
+                                <option value = {worker.id}>{worker.name + " - " + worker.rating}</option>
                             {/each}
                             
                         </select>

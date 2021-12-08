@@ -5,7 +5,6 @@
 <script>
     import { navigate } from "svelte-navigator";
     import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane, Table, Button } from "sveltestrap/src";
-import Spaces from "./Spaces.svelte";
     import { login } from "./stores";
     import { m } from "./stores";
 
@@ -70,10 +69,26 @@ import Spaces from "./Spaces.svelte";
     }
 
     async function remove(booking) {
+        let start = booking.checkIn;
+        let now = Date.now();
+
         const res = await fetch("http://localhost:8080/deleteBooking?id=" + booking.bookingID, {
             method: 'DELETE',
             headers: {'content-type': 'application/json'}
          });
+
+         const resp = await res.text();
+         console.log(resp);
+
+         if(start - now >= 3600000) {
+             $login.balance += 100;
+             updateProfile();
+             alert("Booking cancelled. Rs 100 refunded to your account");
+         }
+
+         else {
+             alert("Booking cancelled. Refund not applicable less than 1 hour before checkin")
+         }
 
          refresh();
     }
@@ -185,7 +200,7 @@ import Spaces from "./Spaces.svelte";
                             <!-- <td>{book.washingWorker}</td> -->
                             <td>
                                 <div>
-                                    <Button color="primary" on:click={modify(book)}>Modify</Button>
+                                    <Button color="primary" disabled={book.checkIn - Date.now() <= 7200000} on:click={modify(book)}>Modify</Button>
                                     <Button color="danger" on:click={remove(book)}>Remove</Button>
                                 </div>
                             </td>
