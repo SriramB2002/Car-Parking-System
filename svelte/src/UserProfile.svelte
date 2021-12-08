@@ -7,6 +7,9 @@
     import { Navbar, NavbarBrand, Nav, NavItem, TabContent, TabPane, Table, Button } from "sveltestrap/src";
 import Spaces from "./Spaces.svelte";
     import { login } from "./stores";
+    import { m } from "./stores";
+
+    m.set("");
 
     const signOut = () => {
         const auth2 = gapi.auth2.getAuthInstance();
@@ -73,6 +76,11 @@ import Spaces from "./Spaces.svelte";
          });
 
          refresh();
+    }
+
+    function modify(booking) {
+        m.set(booking.bookingID);
+        navigate("UserDashboard");
     }
 
 </script>
@@ -177,7 +185,7 @@ import Spaces from "./Spaces.svelte";
                             <!-- <td>{book.washingWorker}</td> -->
                             <td>
                                 <div>
-                                    <Button color="primary">Modify</Button>
+                                    <Button color="primary" on:click={modify(book)}>Modify</Button>
                                     <Button color="danger" on:click={remove(book)}>Remove</Button>
                                 </div>
                             </td>
