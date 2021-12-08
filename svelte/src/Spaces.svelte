@@ -114,11 +114,13 @@ import { Table, Button } from "sveltestrap";
                 <td>{"Slot " + s.id}</td>
                 <td>{s.location}</td>
                 <td>
-                    <select bind:value={s.model} on:change={update(s)}>
-                        <option>Sedan</option>
-                        <option>SUV</option>
-                        <option>Hutchback</option>
-                    </select>
+                    <div>
+                        <select bind:value={s.model} on:change={update(s)}>
+                            <option>Sedan</option>
+                            <option>SUV</option>
+                            <option>Hutchback</option>
+                        </select>
+                    </div>
                 </td>
                 <td><div><Button color="danger" on:click={gog(s.id)}>Remove</Button></div></td>
             </tr>
