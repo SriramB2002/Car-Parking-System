@@ -137,7 +137,7 @@ import Spaces from "./Spaces.svelte";
                             <option></option>
                             <option>Sedan</option>
                             <option>SUV</option>
-                            <option>Hatchback</option>
+                            <option>Hutchback</option>
                         </select>
                     </p>
                     <p>Car Registration Number: <input type="text" bind:value={$login.car_reg}></p>
