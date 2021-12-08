@@ -4,7 +4,7 @@
 
 <script>
     import { Router, navigate } from "svelte-navigator";
-    import { login } from "./stores.js";
+    import { login, m } from "./stores.js";
 
     let username = "", password = "";
     let r;
@@ -20,6 +20,7 @@
             const resp = await res.json();
             login.set(resp); 
             navigate("UserDashboard");
+            m.set("");
         }
 
         catch(err) {
@@ -55,7 +56,8 @@
             body: JSON.stringify($login)
             })
         }
-   
+        
+        m.set("");
         navigate("UserDashboard");
   };
     
