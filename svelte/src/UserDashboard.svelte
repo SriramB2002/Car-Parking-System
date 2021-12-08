@@ -109,6 +109,10 @@ import { get_slot_changes } from "svelte/internal";
     const openmodal = (x) => {
         bool1 = !bool1;
         s = x;
+        dryworker = -1, washworker = -1, repairworker = -1;
+        serv1 = getDry();
+        serv2 = getWashing();
+        serv3 = getRepair();
     }
     let choice;
 
@@ -130,9 +134,7 @@ import { get_slot_changes } from "svelte/internal";
     let drycleaning = false, carwashing = false, repair = false;
     let dryworker = -1, washworker = -1, repairworker = -1;
 
-    let serv1 = getDry();
-    let serv2 = getWashing();
-    let serv3 = getRepair();
+    let serv1, serv2, serv3;
 
     async function getDry() {
         try {
@@ -191,7 +193,7 @@ import { get_slot_changes } from "svelte/internal";
                         checkOut: x2,
                         cleaningWorker: dryworker,
                         washingWorker: washworker,
-                        repairworker: repairworker,
+                        repairWorker: repairworker,
                         slotID: s,
                         userID: $login.id
                     })
@@ -211,7 +213,7 @@ import { get_slot_changes } from "svelte/internal";
                         checkOut: x2,
                         cleaningWorker: dryworker,
                         washingWorker: washworker,
-                        repairworker: repairworker,
+                        repairWorker: repairworker,
                         slotID: s,
                         userID: $login.id
                     })
@@ -337,7 +339,7 @@ import { get_slot_changes } from "svelte/internal";
                         {#await serv1}
                             <p>Please wait...</p>
                         {:then workers} 
-                        <select bind:value={dryworker}>
+                        <select bind:value={dryworker} on:change={console.log(dryworker)}>
                             <option value= -1></option>
                             {#each workers as worker}
                                 <option value = {worker.id}>{worker.name + " - " + worker.rating}</option>
@@ -353,7 +355,7 @@ import { get_slot_changes } from "svelte/internal";
                         {#await serv2}
                             <p>Please wait...</p>
                         {:then workers} 
-                        <select bind:value={washworker}>
+                        <select bind:value={washworker} on:change={console.log(washworker)}>
                             <option value = -1></option>
                             {#each workers as worker}
                                 <option value = {worker.id}>{worker.name + " - " + worker.rating}</option>
@@ -368,7 +370,7 @@ import { get_slot_changes } from "svelte/internal";
                         {#await serv3}
                             <p>Please wait...</p>
                         {:then workers} 
-                        <select bind:value={repairworker}>
+                        <select bind:value={repairworker} on:change={console.log(repairworker)}>
                             <option value = -1></option>
                             {#each workers as worker}
                                 <option value = {worker.id}>{worker.name + " - " + worker.rating}</option>
