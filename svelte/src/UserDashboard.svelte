@@ -396,7 +396,7 @@ import { get_slot_changes } from "svelte/internal";
 <style>
     main {
 		text-align: center;
-		padding: 1em;
+		/* padding: 1em; */
         max-width: 1440px;
 		margin: 0 auto;
 	}
